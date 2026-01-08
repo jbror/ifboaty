@@ -2,7 +2,7 @@
 
 Ifboaty is a personal boat management platform designed to help boat owners organize, visualize, and keep track of everything related to their boat — from onboard inventory to knowledge, projects, and routines.
 
-The goal of Ifboaty is to replace scattered notes, spreadsheets, and memory with a clear, visual, and structured system tailored specifically for life on a boat.
+The goal of Ifboaty is to replace scattered notes, spreadsheets, and memory with a clear, visual, and structured system.
 
 ---
 
