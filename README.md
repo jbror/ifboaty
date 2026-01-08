@@ -82,6 +82,17 @@ This makes it easy to quickly answer questions like *“Where is this stored?”
 
 ---
 
+## 🖼 Example Wireframes
+
+This repository includes example wireframes used to explore and communicate early ideas around layout, navigation, and interaction.
+
+These wireframes are **visual concept demos only** — they are not final designs and do not represent completed functionality.  
+They exist to illustrate ideas and guide future development.
+<img width="1024" height="1024" alt="wireframe1" src="https://github.com/user-attachments/assets/9cdf1058-ec08-4d97-bcfe-84fcad0c88fa" />
+<img width="1024" height="1024" alt="wireframe2" src="https://github.com/user-attachments/assets/34bf8545-c646-46ea-9902-4a1650296606" />
+
+---
+
 ## 🎯 Vision
 
 Ifboaty aims to be a **calm, practical, and visual companion** for boat owners — focused on clarity, structure, and real-world usefulness rather than complexity.
