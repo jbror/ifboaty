@@ -9,10 +9,10 @@ export interface Area {
   id: number
   name: string
   type: 'interior' | 'exterior'
-  storageUnits: storageUnit[];
+  storageUnits: StorageUnit[];
 }
 
-export interface storageUnit {
+export interface StorageUnit {
   id: number
   name: string
   items: Item[]
