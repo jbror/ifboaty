@@ -1,20 +1,15 @@
 ﻿<template>
   <div class="container">
     <div class="content">
-      <h1 style="font-size: 3em;">IFBoaty</h1>
+      <h1 style="font-size: 3em">IFBoaty</h1>
       <p>Gå till din båt för att börja. Har du ingen båt så skapar du den här!</p>
-<Boat style="display:flexbox; margin-top: 15px;"></Boat>
+      <Boat style="display: flexbox; margin-top: 15px"></Boat>
     </div>
   </div>
-  
 </template>
 
 <script setup lang="ts">
-import Boat from './components/Boat.vue';
-
-
-
-
+import Boat from './components/Boat.vue'
 </script>
 
 <style scoped>
@@ -33,7 +28,6 @@ import Boat from './components/Boat.vue';
   color: #fff;
   margin-top: 5%;
 }
-
 
 p {
   font-size: 1.1rem;
