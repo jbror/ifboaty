@@ -21,6 +21,7 @@ declare module 'vue' {
     Menu: typeof import('primevue/menu')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SelectedBoat: typeof import('./src/components/SelectedBoat.vue')['default']
     ToggleButton: typeof import('primevue/togglebutton')['default']
   }
 }
