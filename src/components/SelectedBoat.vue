@@ -1,22 +1,11 @@
 <template>
-  <div class="boat-app">
+  <div class="flex">
+    <Menu :model="menuItems" class="w-64 h-screen"></Menu>
+    <div class="flex-1 p-8">  <!-- Mitt content till höger om menyn -->
     <h1>Båt ID: {{ boatId }}</h1>
-
     <Button label="Tillbaka" icon="pi pi-arrow-left" @click="$router.push('/')" class="mt-4"></Button>
   </div>
-<div class="card flex justify-center">
-<Menu :model="menuItems"  >
-  
-<template #start>
-
-</template>
-
-
-
-</Menu>
 </div>
-
-
 </template>
 
 <script setup lang="ts">
@@ -37,7 +26,6 @@ const menuItems = [
 ]
 
 
-
 </script>
 
 
@@ -46,16 +34,4 @@ const menuItems = [
 
 <style scoped>
 
-
-
-
-
-
-
-
-
-.boat-app {
-  padding: 20px;
-  
-}
 </style>
