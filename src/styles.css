@@ -1,3 +1,2 @@
-﻿.kaka {
-  margin: 0;
-}
+﻿@import "tailwindcss";
+@plugin "tailwindcss-primeui";
