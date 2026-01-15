@@ -1,2 +1,19 @@
 ﻿@import "tailwindcss";
 @plugin "tailwindcss-primeui";
+
+/* -----Global styling för alla Menu-komponenter----- */
+.p-menu {
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.p-menu * {
+  color: white !important;
+}
+
+.p-menu .p-menu-item-content:hover,
+.p-menu .p-menu-item-content:focus,
+.p-menu .p-focus .p-menu-item-content {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+/* -------------------------------------------------- */
