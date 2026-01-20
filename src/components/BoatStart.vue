@@ -1,11 +1,9 @@
 <template>
   <div class="flex">
-    <Menu :model="menuItems" class="bg-[#1d2937] w-64 h-screen">
-      <template #item="{ item, props }">
-        <router-link
-          v-slot="{ href, navigate }"
-          :to="{ name: item.route, params: { id: boatId } }" custom>
-          <a :href="href" v-bind="props.action" @click="navigate">
+    <Menu :model="menuItems" class="w-64 h-screen">
+      <template v-slot:item="{ item, props }">
+        <router-link v-slot="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
+          <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }">
             <span class="ml-2">{{ item.label }}</span>
           </a>
         </router-link>
@@ -35,7 +33,17 @@ const menuItems: MenuItem[] = [
     label: 'Inventory',
     route: 'boat.inventory',
   },
+   {
+    label: 'Todo',
+    route: 'boat.todo',
+  }
 ]
 </script>
 
-<style scoped></style>
+<style scoped>
+.active-menu-item {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-weight: 600;
+}
+</style>

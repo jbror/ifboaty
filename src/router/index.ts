@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Boat from '../components/Boat.vue'
-import SelectedBoat from '../components/BoatStart.vue'
 import BoatStart from '../components/BoatStart.vue'
 import Overview from '@/components/Overview.vue'
 import Inventory from '@/components/Inventory.vue'
+import Todo from '@/components/Todo.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +24,10 @@ const router = createRouter({
 
         // Inventory
         { path: 'inventory', name: 'boat.inventory', component: Inventory, props: true },
+
+        // Todo
+        { path: 'todo', name: 'boat.todo', component: Todo, props: true }
+
       ],
     },
   ],
