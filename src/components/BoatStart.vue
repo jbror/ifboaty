@@ -1,8 +1,8 @@
 <template>
   <div class="flex">
     <Menu :model="menuItems" class="w-64 h-screen">
-      <template v-slot:item="{ item, props }">
-        <router-link v-slot="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
+      <template #item="{ item, props }">
+        <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
           <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }">
             <span class="ml-2">{{ item.label }}</span>
           </a>

@@ -1,16 +1,15 @@
 <template>
   <div class="flex">
-    <h1>Båt ID: {{ boatId }}</h1>
-    <p>Todo</p>
+    <h1>Båt ID: {{ id }}</h1>
+    <p>/Todo</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 
-const route = useRoute()
-const boatId = computed(() => route.params.id)
+ const props = defineProps<{
+  id: string
+}>()
+
 </script>
-
 <style scoped></style>
