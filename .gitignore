@@ -23,6 +23,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+Todo och tankar/
 
 *.tsbuildinfo
 
@@ -34,4 +35,4 @@ coverage
 
 # Vitest
 __screenshots__/
-Todo och tankar/tankar.txt
+
