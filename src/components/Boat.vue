@@ -7,13 +7,18 @@
       <Button
         label="Lägg till båt"
         icon="pi pi-plus"
-        @click="visible = true"
+        @click="displayDialog = true"
         severity="contrast"
         class="mb-4 w-full"
       >
       </Button>
 
-      <Dialog v-model:visible="visible" modal header="Lägg till en båt" :style="{ width: '450px' }">
+      <Dialog
+        v-model:visible="displayDialog"
+        modal
+        header="Lägg till en båt"
+        :style="{ width: '450px' }"
+      >
         <span class="text-gray-800 block mb-5">Fyll i detaljerna för den nya båten.</span>
 
         <div class="flex items-center gap-3 mb-4">
@@ -36,7 +41,7 @@
             type="button"
             label="Avbryt"
             severity="contrast"
-            @click="visible = false"
+            @click="displayDialog = false"
           ></Button>
           <Button type="button" label="Spara båt" @click="saveBoat"></Button>
         </div>
@@ -47,16 +52,15 @@
         <Column field="id" header="Id"></Column>
         <Column field="year" header="År"></Column>
         <Column header="">
-          <template #body="slotProps">
+          <template #body="{ data, index }">
             <div class="flex gap-2">
-              <Button label="Välj" severity="info" size="small" @click="selectBoat(slotProps.data)">
-              </Button>
+              <Button label="Välj" severity="info" size="small" @click="selectBoat(data)"> </Button>
               <Button
                 icon="pi pi-trash"
                 severity="danger"
                 size="small"
                 text
-                @click="boats.splice(slotProps.index, 1)"
+                @click="boats.splice(index, 1)"
               >
               </Button>
             </div>
@@ -83,7 +87,8 @@ const boats = ref<Boat[]>([
   },
 ])
 
-const visible = ref(false)
+const displayDialog = ref(false)
+
 const idInput = ref<string>('')
 const yearInput = ref<string>('')
 
@@ -95,16 +100,16 @@ const newBoat = ref<Boat>({
 })
 
 const saveBoat = () => {
-  if (newBoat.value.name.trim()) {
-    const id = parseInt(idInput.value) || 0
-    const year = parseInt(yearInput.value) || 0
+  const id = parseInt(idInput.value) || 0
+  const year = parseInt(yearInput.value) || 0
 
+  if (newBoat.value.name.trim() && id > 0 && year > 0) {
     boats.value.push({ ...newBoat.value, id: id, year: year })
 
     newBoat.value = { id: 0, name: '', year: 0, areas: [] }
     idInput.value = ''
     yearInput.value = ''
-    visible.value = false
+    displayDialog.value = false
   }
 }
 
