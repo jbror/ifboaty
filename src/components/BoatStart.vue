@@ -9,16 +9,16 @@
       </template>
 
       <template #item="{ item, props }">
-        <div class="flex justify-center pr-4">
+
         <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
-          <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }">
-          
-            <span class="flex justify-right">{{ item.label }}</span>
-            <span :class="item.icon"  />
-            
+          <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }" class="grid grid-cols-[auto_1fr]">
+          <span :class="item.icon"  />
+            <span >{{ item.label }}</span>
+           
+         
           </a>
         </router-link>
-        </div>
+
       </template>
     </Menu>
     <div class="flex-1 p-8">
@@ -53,7 +53,7 @@ const menuItems: MenuItem[] = [
    {
     label: 'Todo',
     route: 'boat.todo',
-    icon: 'picheck-square',
+    icon: 'pi pi-check-square',
   }
 ]
 </script>
