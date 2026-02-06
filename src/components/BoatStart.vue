@@ -11,7 +11,7 @@
       <template #item="{ item, props }">
 
         <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
-          <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }" class="grid grid-cols-[auto_1fr]">
+          <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }" class="grid-cols-[auto_1_fr]">
           <span :class="item.icon"  />
             <span >{{ item.label }}</span>
            
