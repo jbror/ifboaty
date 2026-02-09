@@ -1,14 +1,14 @@
-# Ifboaty
+# ifBoaty
 
-Ifboaty is a personal boat management platform designed to help boat owners organize, visualize, and keep track of everything related to their boat — from onboard inventory to knowledge, projects, and routines.
+ifBoaty is a personal boat management platform designed to help boat owners organize, visualize, and keep track of everything related to their boat — from onboard inventory to knowledge, projects, and routines.
 
-The goal of Ifboaty is to replace scattered notes, spreadsheets, and memory with a clear, visual, and structured system.
+The goal of ifBoaty is to replace scattered notes, spreadsheets, and memory with a clear, visual, and structured system.
 
 ---
 
 ## ✨ Core Idea
 
-At the heart of Ifboaty is **structured and flexible organization**.
+At the heart of ifBoaty is **structured and flexible organization**.
 
 Inventory information is not locked to a single view. Instead, the same data can be explored in different ways depending on the situation — visually or as structured lists.
 
@@ -88,18 +88,19 @@ This repository includes example wireframes used to explore and communicate earl
 
 These wireframes are **visual concept demos only** — they are not final designs and do not represent completed functionality.  
 They exist to illustrate ideas and guide future development.
-<img width="1024" height="1024" alt="wireframe1" src="https://github.com/user-attachments/assets/9cdf1058-ec08-4d97-bcfe-84fcad0c88fa" />
-<img width="1024" height="1024" alt="wireframe2" src="https://github.com/user-attachments/assets/34bf8545-c646-46ea-9902-4a1650296606" />
+<img width="1024" height="1024" alt="wireframe1" src="https://github.com/user-attachments/assets/4f9fbb58-f9b0-4cc1-a89c-b65d54edd004" />
+<img width="1024" height="1024" alt="wireframe2" src="https://github.com/user-attachments/assets/d00ac9ac-f549-4fc0-8556-fe7053df1b84" />
+
 
 ---
 
 ## 🎯 Vision
 
-Ifboaty aims to be a **calm, practical, and visual companion** for boat owners — focused on clarity, structure, and real-world usefulness rather than complexity.
+ifBoaty aims to be a **calm, practical, and visual companion** for boat owners — focused on clarity, structure, and real-world usefulness rather than complexity.
 
 ---
 
 ## 📌 Status
 
-🚧 Work in progress  
+Work in progress  
 This repository currently focuses on planning, structure, and design before implementation begins.
