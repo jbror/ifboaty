@@ -47,13 +47,18 @@ const menuItems: MenuItem[] = [
   },
   {
     label: 'Inventory',
+    icon:  'pi pi-database',
     route: 'boat.inventory',
-    icon:  'pi pi-cog',
   },
    {
     label: 'Todo',
+    icon:  'pi pi-check-square',
     route: 'boat.todo',
-    icon: 'pi pi-check-square',
+  },
+  {
+    label: 'Min båt',
+    icon:  'pi pi-cog',
+    route: 'boat.myboat',
   }
 ]
 </script>

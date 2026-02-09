@@ -4,14 +4,15 @@ import BoatStart from '../components/BoatStart.vue'
 import Overview from '@/components/Overview.vue'
 import Inventory from '@/components/Inventory.vue'
 import Todo from '@/components/Todo.vue'
+import MyBoat from '@/components/MyBoat.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',  
+      path: '/',
       name: 'home',
-      component: Boat
+      component: Boat,
     },
     {
       path: '/boat/:id',
@@ -26,8 +27,10 @@ const router = createRouter({
         { path: 'inventory', name: 'boat.inventory', component: Inventory, props: true },
 
         // Todo
-        { path: 'todo', name: 'boat.todo', component: Todo, props: true }
+        { path: 'todo', name: 'boat.todo', component: Todo, props: true },
 
+        // My boat
+        { path: 'myboat', name: 'boat.myboat', component: MyBoat, props: true },
       ],
     },
   ],
