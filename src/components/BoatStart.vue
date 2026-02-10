@@ -8,27 +8,20 @@
       </template>
 
       <template #item="{ item, props }">
-        <router-link
-          #="{ href, navigate, isExactActive }"
-          :to="{ name: item.route, params: { id: boatId } }"
-          custom
->
-          <a
-            :href="href"
-            v-bind="props.action"
-            @click="navigate"
-            :class="{ 'active-menu-item': isExactActive }"
-            class="grid-cols-[auto_1_fr]"
-          >
+        <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
+          <a :href="href" :="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }" class="grid-cols-[auto_1_fr]">
             <span :class="item.icon" />
             <span class="px-2 py-2">{{ item.label }}</span>
           </a>
         </router-link>
       </template>
+
       <template #end>
-        <div class=" flex px-2 py-2 mt-1">
-<Button  label="Back to start" severity="info" />
-</div>
+        <div class="grid grid-cols-2 px-2 py-2">
+          <RouterLink to="/">
+            <Button size="small" label="Back to start" severity="secondary" />
+          </RouterLink>
+        </div>
       </template>
     </Menu>
 
@@ -43,8 +36,6 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { MenuItem } from 'primevue/menuitem'
-import { icon } from '@primeuix/themes/aura/avatar'
-import { IconField } from 'primevue'
 
 const route = useRoute()
 const boatId = computed(() => route.params.id)
@@ -74,7 +65,6 @@ const menuItems: MenuItem[] = [
     separator: true,
     class: 'mt-4',
   },
- 
 ]
 </script>
 
