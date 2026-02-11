@@ -2,8 +2,38 @@
   <div class="flex">
     <Menu :model="menuItems" class="w-64 h-screen">
       <template #start>
-        <div class="my-logo-container">
-          <img src="/ifboatylogo5.png" alt="Logo" class="logo" />
+        <div class="mr-8">
+          <svg width="100%" height="auto" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background -->
+            <rect width="100%" height="100%" fill="#1d2937" />
+            <!-- Sailboat -->
+            <g transform="translate(400,230)" stroke="white" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Mast -->
+              <line x1="0" y1="-110" x2="0" y2="40" />
+              <!-- Front Sail -->
+              <path d="M 0 -110 L 95 40 L 0 40 Z" />
+              <!-- Back Sail -->
+              <path d="M 0 -110 L -75 40 L 0 40 Z" />
+              <!-- Hull -->
+              <path
+                d="M -120 60 
+             Q 0 85 120 60"
+              />
+            </g>
+            <!-- Text -->
+            <text
+              x="400"
+              y="400"
+              text-anchor="middle"
+              fill="white"
+              font-family="Segoe UI, Arial, sans-serif"
+              font-size="85"
+              font-weight="500"
+              letter-spacing="1"
+            >
+              ifBoaty
+            </text>
+          </svg>
         </div>
       </template>
 
@@ -19,7 +49,7 @@
       <template #end>
         <div class="grid grid-cols-2 px-2 py-2">
           <RouterLink to="/">
-            <Button size="small" label="Back to start" severity="secondary" />
+            <Button size="small" label="Tillbaka hem" severity="secondary" />
           </RouterLink>
         </div>
       </template>
@@ -73,20 +103,5 @@ const menuItems: MenuItem[] = [
   background: rgba(255, 255, 255, 0.15);
   color: white;
   font-weight: 600;
-}
-
-.my-logo-container {
-  padding: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 1rem;
-}
-
-.logo {
-  max-width: 100%;
-  height: auto;
-  max-height: 80px;
 }
 </style>
