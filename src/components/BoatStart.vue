@@ -2,27 +2,40 @@
   <div class="flex">
     <Menu :model="menuItems" class="w-64 h-screen">
       <template #start>
-        <div class="h-50 m mr-12">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid">
-            <rect x="250" y="90" width="12" height="260" fill="white" stroke="112" />
+        <div class="h-38 mt-4 mb-4 mr-12">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+            <!-- Sailboat -->
+            <g
+              transform="translate(256,220) scale(1.6)"
+              stroke="white"
+              stroke-width="5"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <!-- Mast -->
+              <line x1="0" y1="-120" x2="0" y2="70" />
 
-            <path d="M 264.091 93.596 L 264.091 333.596 L 398.091 333.596 L 264.091 93.596 Z" fill="white" />
+              <!-- Front Sail -->
+              <path d="M 0 -110 L 95 40 L 0 40 Z" />
 
-            <path d="M 248.358 122.697 L 132.358 332.697 L 248.358 332.697 L 248.358 122.697 Z" fill="white" />
+              <!-- Back Sail -->
+              <path d="M 0 -100 L -75 40 L 0 40 Z" />
 
-            <path d="M 110 350 C 207.333 386.404 304.667 386.404 402 350" fill="white" style="" />
+              <!-- Hull -->
+              <path d="M -120 60 Q 0 85 120 60" />
+            </g>
 
+            <!-- Text -->
             <text
-              style="
-                fill: rgb(255, 255, 255);
-                font-family: Arial, sans-serif;
-                font-size: 75px;
-                letter-spacing: 1px;
-                text-anchor: middle;
-                white-space: pre;
-              "
-              x="254.395"
-              y="448.068"
+              x="256"
+              y="430"
+              text-anchor="middle"
+              fill="white"
+              font-family="Segoe UI, Arial, sans-serif"
+              font-size="70"
+              font-weight="500"
+              letter-spacing="1"
             >
               ifBoaty
             </text>

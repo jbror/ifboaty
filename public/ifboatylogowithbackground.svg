@@ -5,6 +5,9 @@
     height="100%"
     preserveAspectRatio="xMidYMid meet">
 
+  <!-- Background -->
+  <rect width="512" height="512" fill="#1d2937" />
+
   <!-- Sailboat -->
   <g transform="translate(256,220) scale(1.6)"
      stroke="white"
