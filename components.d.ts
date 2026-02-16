@@ -15,7 +15,6 @@ declare module 'vue' {
     BoatStart: typeof import('./src/components/BoatStart.vue')['default']
     Button: typeof import('primevue/button')['default']
     Column: typeof import('primevue/column')['default']
-    copy: typeof import('./src/components/Todo copy.vue')['default']
     DataTable: typeof import('primevue/datatable')['default']
     Dialog: typeof import('primevue/dialog')['default']
     InputNumber: typeof import('primevue/inputnumber')['default']
