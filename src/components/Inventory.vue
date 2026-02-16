@@ -2,6 +2,7 @@
   <div class="flex">
     <h1>Båt ID: {{ id }}</h1>
     <p>/Inventory</p>
+    <p>Add items here soon</p>
   </div>
 </template>
 
