@@ -3,6 +3,7 @@ export interface Boat {
   name: string
   year: number
   areas: Area[]
+  data?: BoatData[]
 }
 
 export interface Area {
@@ -23,4 +24,13 @@ export interface Item {
   name: string
   quantity: number
   category?: string
+}
+
+export interface BoatData {
+  location: string
+  depth: string
+  length: number
+  height: number
+  weight: number
+  engine: string
 }
