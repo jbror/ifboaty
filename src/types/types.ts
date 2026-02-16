@@ -28,7 +28,7 @@ export interface Item {
 
 export interface BoatData {
   location: string
-  depth: string
+  depth: number
   length: number
   height: number
   weight: number
