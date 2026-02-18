@@ -1,4 +1,14 @@
-import type { Boat, StorageUnit } from '../types/types'
+import type { Boat, StorageUnit, Item} from '../types/types'
+
+
+
+ export const allItems: Item = {
+  id: 20,
+  name: 'mejsel',
+  quantity: 2,
+  category: 'verktyg'
+
+}
 
 const defaultStorageUnit: StorageUnit = {
   id: 1,
