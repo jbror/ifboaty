@@ -1,19 +1,23 @@
-import type { Boat, StorageUnit, Item} from '../types/types'
+import type { Boat, StorageUnit, Item } from '../types/types'
 
-
-
- export const allItems: Item = {
-  id: 20,
-  name: 'mejsel',
-  quantity: 2,
-  category: 'verktyg'
-
-}
-
+const allItems: Item[] = [
+  {
+    id: 20,
+    name: 'mejsel',
+    quantity: 2,
+    category: 'verktyg',
+  },
+  {
+    id: 21,
+    name: 'kaka',
+    quantity: 3,
+    category: 'kex',
+  },
+]
 const defaultStorageUnit: StorageUnit = {
   id: 1,
   name: 'Default',
-  items: [],
+  items: allItems,
 }
 
 const myBoat: Boat = {
