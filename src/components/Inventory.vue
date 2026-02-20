@@ -21,15 +21,15 @@ const props = defineProps<{
   id: string
 }>()
 
-const allItems = []
+const allItems: Item[] = []
 
-const currentItems = ref<Item>()
+// allItems.push(myboatdata.areas[0]?.storageUnits[0]?.items);
 
-allItems.push(myboatdata.areas[0]?.storageUnits[0]?.items[0]?.name);
+ const fillItems = computed (() => myboatdata.areas.flatMap(area => area.storageUnits).flatMap(saker => saker?.items).flatMap(pryl => allItems.push(pryl ))
+);
 
-console.log(allItems.push('kaka'))
+console.log(fillItems.value)
 console.log(allItems)
-
 
 
 </script>
