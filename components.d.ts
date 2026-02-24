@@ -17,6 +17,7 @@ declare module 'vue' {
     Column: typeof import('primevue/column')['default']
     DataTable: typeof import('primevue/datatable')['default']
     Dialog: typeof import('primevue/dialog')['default']
+    Divider: typeof import('primevue/divider')['default']
     InputNumber: typeof import('primevue/inputnumber')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Inventory: typeof import('./src/components/Inventory.vue')['default']
