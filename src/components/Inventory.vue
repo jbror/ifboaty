@@ -3,7 +3,6 @@
     <h1 class="mb-2">Båt ID: {{ id }}</h1>
     <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
     <Divider />
-
       <DataTable :value="displayItems" show-gridlines>
         <Column field="id" , header="Id"></Column>
         <Column field="name" , header="Name"></Column>
@@ -12,19 +11,11 @@
 
       </DataTable>
 
-   
     <InputText placeholder="Name" v-model="addItemName" />
     <InputText placeholder="Id" v-model="addItemId" />
     <InputText placeholder="Quantity" v-model="addItemQuantity" />
     <InputText placeholder="Category" v-model="addItemCategory" />
     <Button type="submit" label="Lägg till pryl" severity="info" @click="addItem" />
- 
-    <!-- <DataTable :value="newItemHolder">
-      <Column field="name" header="Name"></Column>
-      <Column field="id" header="Id"></Column>
-      <Column field="quantity" header="Quantity"></Column>
-      <Column field="category" header="Category"></Column>
-    </DataTable> -->
   </div>
 </template>
 
@@ -55,7 +46,7 @@ const addItemId = ref('')
 const addItemQuantity = ref('')
 const addItemCategory = ref('')
 
-// Adds item from input and validating, work in progress
+// Adds item from input and validating
 function addItem() {
   if (!isValidItem(addItemName.value, addItemId.value, addItemQuantity.value)) {
     return
