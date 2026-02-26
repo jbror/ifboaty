@@ -61,7 +61,7 @@
       </template>
     </Menu>
 
-    <div class="flex-1 p-8">
+    <div class="flex p-8">
       <!-- Mitt content till höger om menyn -->
       <router-view></router-view>
     </div>
