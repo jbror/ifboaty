@@ -1,15 +1,20 @@
 <template>
   <div class="w-full">
-    <h1 class="mb-2">Båt ID: {{ id }}</h1>
-    <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
-    <Divider />
-      <DataTable :value="displayItems" show-gridlines>
-        <Column field="id" , header="Id"></Column>
-        <Column field="name" , header="Name"></Column>
-        <Column field="quantity" , header="Quantity"></Column>
-        <Column field="category" , header="Category"></Column>
+    <div class="mb-8">
+      <h1>Båt ID: {{ id }}</h1>
+      <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
+    </div>
 
-      </DataTable>
+ <div class="flex flex-col md:flex-row gap-2 mb-2">
+    <Button label="Alla utrymmen"  variant="outlined" severity="info" size="small" />
+    <Button label="Ruffen" disabled variant="outlined" severity="info" size="small" />
+    </div>
+    <DataTable class="mb-2" :value="displayItems" show-gridlines>
+      <Column field="id" , header="Id"></Column>
+      <Column field="name" , header="Name"></Column>
+      <Column field="quantity" , header="Quantity"></Column>
+      <Column field="category" , header="Category"></Column>
+    </DataTable>
 
     <InputText placeholder="Name" v-model="addItemName" />
     <InputText placeholder="Id" v-model="addItemId" />
@@ -39,7 +44,6 @@ const displayItems = computed(() => {
 
   return allItems.value.filter((item) => item.category === 'Redskap') // Etc, for later when adding some ability to filter
 })
-
 
 const addItemName = ref('')
 const addItemId = ref('')
@@ -80,7 +84,6 @@ function isValidItem(name: string, id: string, quatity: string): boolean {
   if (idNum <= 0 || quantityNum <= 0) {
     return false
   }
-
 
   return true
 }
