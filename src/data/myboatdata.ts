@@ -1,4 +1,5 @@
-import type { Boat, StorageUnit, Item, BoatData } from '../types/types'
+import { computed } from 'vue'
+import type { Boat, StorageUnit, Item, BoatData, Area } from '../types/types'
 
 const baseItems: Item[] = [
   {
@@ -27,10 +28,44 @@ const baseItems: Item[] = [
   },
 ]
 
+
+
+const pantryItems: Item[] = [
+  {
+    id: 41,
+    name: 'Kanel',
+    quantity: 1,
+    category: 'Skafferi'
+  },
+  {
+    id: 201,
+    name: 'Ketchup',
+    quantity: 1,
+    category: 'Skafferi',
+  }
+
+] 
+
 const baseStorage: StorageUnit = {
   id: 1,
   name: 'Default',
   items: baseItems,
+}
+
+const skafferiStorage: StorageUnit = {
+  id: 2,
+  name: 'Pantry',
+  items: pantryItems,
+}
+
+
+
+
+const ruffenArea: Area = {
+  id: 2,
+  name: 'Ruffen',
+  type: 'interior',
+  storageUnits: [skafferiStorage],
 }
 
 const myBoat: Boat = {
@@ -44,11 +79,22 @@ const myBoat: Boat = {
       type: 'interior',
       storageUnits: [baseStorage],
     },
+    ruffenArea
   ],
   data: [],
 }
 
 export default myBoat
+
+
+
+
+
+export const allStorageUnits = computed (() => myBoat.areas.flatMap((x) => x.storageUnits).flatMap((s) => s.name))
+
+
+
+
 
 
 function getAllItems(): Item[] {

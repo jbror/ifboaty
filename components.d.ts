@@ -15,6 +15,7 @@ declare module 'vue' {
     BoatStart: typeof import('./src/components/BoatStart.vue')['default']
     Button: typeof import('primevue/button')['default']
     ButtonGroup: typeof import('primevue/buttongroup')['default']
+    Card: typeof import('primevue/card')['default']
     Column: typeof import('primevue/column')['default']
     DataTable: typeof import('primevue/datatable')['default']
     Dialog: typeof import('primevue/dialog')['default']
@@ -23,6 +24,7 @@ declare module 'vue' {
     InputNumber: typeof import('primevue/inputnumber')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Inventory: typeof import('./src/components/Inventory.vue')['default']
+    Listbox: typeof import('primevue/listbox')['default']
     Menu: typeof import('primevue/menu')['default']
     MyBoat: typeof import('./src/components/MyBoat.vue')['default']
     Overview: typeof import('./src/components/Overview.vue')['default']
@@ -31,5 +33,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Todo: typeof import('./src/components/Todo.vue')['default']
     ToggleButton: typeof import('primevue/togglebutton')['default']
+    Tree: typeof import('primevue/tree')['default']
   }
 }
