@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="mb-6">
       <h1 class="text-2xl font-bold">Båt ID: {{ id }}</h1>
-      <p class="text-gray-600">Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
+      <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
     </div>
 
     <!-- Grid Layout: DataTable (vänster) + Cards (höger) -->
@@ -23,7 +23,7 @@
         </DataTable>
 
         <!-- Add Item Form (visa/dölj) -->
-        <div v-if="showAddForm" class="p-4 border rounded border-sky-100">
+        <div v-if="showAddForm" class="p-4 border  border-zinc-200">
           <h3 class="font-bold mb-3">Lägg till ny pryl</h3>
           <div class="flex flex-col gap-2">
             <InputText placeholder="Namn" v-model="addItemName" />
