@@ -4,7 +4,7 @@
       <h1 class="text-[48px] mb-2.5 text-center">IFBoaty</h1>
       <p class="text-[18px] mb-8 text-center">Välj eller skapa din båt för att komma vidare</p>
 
-      <Button label="Lägg till båt" icon="pi pi-plus" @click="displayDialog = true" severity="contrast" class="mb-4 w-full"> </Button>
+      <Button label="Lägg till båt" icon="pi pi-plus" @click="displayDialog = true" severity="primary" class="mb-4 w-full"> </Button>
 
       <Dialog v-model:visible="displayDialog" modal header="Lägg till en båt" :style="{ width: '450px' }">
         <span class="block mb-5">Fyll i detaljerna för den nya båten.</span>
@@ -25,8 +25,8 @@
         </div>
 
         <div class="flex justify-end gap-2">
-          <Button type="button" label="Avbryt" severity="contrast" @click="displayDialog = false"></Button>
-          <Button type="button" label="Spara båt" @click="saveBoat"></Button>
+          <Button type="button" label="Avbryt" severity="secondary" @click="displayDialog = false"></Button>
+          <Button type="button" label="Spara båt" severity="info" @click="saveBoat"></Button>
         </div>
       </Dialog>
 
