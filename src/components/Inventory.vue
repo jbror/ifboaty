@@ -5,8 +5,9 @@
       <p class="text-gray-600">Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
     </div>
 
+    <!-- Grid Layout: DataTable (vänster) + Cards (höger) -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-
+      <!-- Vänster: DataTable (2/3 av bredden) -->
       <div class="lg:col-span-2">
         <DataTable :value="displayItems" show-gridlines size="small" class="mb-4">
           <template #header>
@@ -21,7 +22,8 @@
           <Column field="category" header="Kategori"></Column>
         </DataTable>
 
-        <div v-if="showAddForm" class="p-4 border rounded">
+        <!-- Add Item Form (visa/dölj) -->
+        <div v-if="showAddForm" class="p-4 border rounded border-sky-100">
           <h3 class="font-bold mb-3">Lägg till ny pryl</h3>
           <div class="flex flex-col gap-2">
             <InputText placeholder="Namn" v-model="addItemName" />
@@ -33,8 +35,9 @@
         </div>
       </div>
 
-
+      <!-- Höger: Cards (1/3 av bredden) -->
       <div class="flex flex-col gap-4">
+        <!-- Card: Områden -->
         <Card>
           <template #title>
             <div class="flex items-center gap-2">
@@ -47,6 +50,7 @@
           </template>
         </Card>
 
+        <!-- Card: Stuvfack -->
         <Card>
           <template #title>
             <div class="flex items-center gap-2">
@@ -54,7 +58,6 @@
               <span>Stuvfack</span>
             </div>
           </template>
-
           <template #content>
             <Tree :value="storageNodes" selectionMode="single" v-model:selectionKeys="selectedStorageKey" @node-select="onStorageSelect" />
           </template>
@@ -64,31 +67,30 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 import type { Boat, Item, Area, StorageUnit } from '../types/types'
 import boatData from '../data/myboatdata.ts'
 import { allItemsInBoat } from '../data/myboatdata.ts'
 import { ref, computed } from 'vue'
-import type { TreeNode} from 'primevue/treenode'
+import type { TreeNode } from 'primevue/treenode'
 
 const props = defineProps<{
   id: string
 }>()
 
-
-
+// State
 const showAddForm = ref(false)
-const selectedAreaKey = ref<any>({ '0': true }) 
+const selectedAreaKey = ref<any>({ '0': true }) // Default: "Alla områden" är vald
 const selectedStorageKey = ref<any>({})
 const selectedArea = ref<Area | null>(null)
 const selectedStorage = ref<StorageUnit | null>(null)
 const allItems = ref(allItemsInBoat)
 
+// Create Tree nodes for Areas
 const areaNodes = computed<TreeNode[]>(() => {
   return [
     {
-      key:  '0',
+      key: '0',
       label: 'Alla områden',
       icon: 'pi pi-globe',
       children: boatData.areas.map((area, index) => ({
@@ -101,12 +103,15 @@ const areaNodes = computed<TreeNode[]>(() => {
   ]
 })
 
+// Create Tree nodes for Storage Units (filtreras baserat på vald area)
 const storageNodes = computed<TreeNode[]>(() => {
   let units: StorageUnit[] = []
 
   if (selectedArea.value) {
+    // Visa bara storage units från vald area
     units = selectedArea.value.storageUnits
   } else {
+    // Visa alla storage units
     units = boatData.areas.flatMap((area) => area.storageUnits)
   }
 
@@ -125,45 +130,45 @@ const storageNodes = computed<TreeNode[]>(() => {
   ]
 })
 
-
+// Display items based on selections
 const displayItems = computed(() => {
   let items: Item[] = allItems.value
 
-
+  // Filtrera baserat på valt storage unit
   if (selectedStorage.value) {
     return selectedStorage.value.items
   }
 
-
+  // Filtrera baserat på vald area
   if (selectedArea.value) {
     return selectedArea.value.storageUnits.flatMap((unit) => unit.items)
   }
 
-
+  // Annars visa allt
   return items
 })
 
-
-function onAreaSelect(node: any) {
+// Event handlers
+function onAreaSelect(node: TreeNode) {
   if (node.data) {
-    selectedArea.value = node.data
-    selectedStorage.value = null 
+    selectedArea.value = node.data as Area
+    selectedStorage.value = null // Reset storage selection
     selectedStorageKey.value = {}
   } else {
-   
+    // "Alla områden" valt
     selectedArea.value = null
   }
 }
 
-function onStorageSelect(node: any) {
+function onStorageSelect(node: TreeNode) {
   if (node.data) {
-    selectedStorage.value = node.data
+    selectedStorage.value = node.data as StorageUnit
   } else {
     selectedStorage.value = null
   }
 }
 
-
+// Add item functionality
 const addItemName = ref('')
 const addItemId = ref('')
 const addItemQuantity = ref('')
@@ -181,8 +186,7 @@ function addItem() {
   }
   allItems.value.push(newItem)
 
-  
-  
+  // Reset form
   addItemName.value = ''
   addItemId.value = ''
   addItemQuantity.value = ''
