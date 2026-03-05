@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="mb-6">
-      <h1 class="text-2xl font-bold">Båt ID: {{ id }}</h1>
+      <h1 class="text-xl font-bold">Båt ID: {{ id }}</h1>
       <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
     </div>
 
@@ -9,7 +9,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Vänster: DataTable (2/3 av bredden) -->
       <div class="lg:col-span-2">
-        <DataTable :value="displayItems" show-gridlines size="small" class="mb-4">
+        <DataTable :value="displayItems" striped-rows show-gridlines size="small">
           <template #header>
             <div class="flex items-center justify-between">
               <span class="font-bold">Innehåll</span>
@@ -20,10 +20,16 @@
           <Column field="name" header="Namn"></Column>
           <Column field="quantity" header="Antal"></Column>
           <Column field="category" header="Kategori"></Column>
+          <template #footer>
+            <p class="text-center text-sm">
+              <strong>{{ displayItems.length }}</strong> prylar • {{ selectedArea?.name || 'Alla områden' }} •
+              {{ selectedStorage?.name || 'Alla stuvfack' }}
+            </p>
+          </template>
         </DataTable>
 
         <!-- Add Item Form (visa/dölj) -->
-        <div v-if="showAddForm" class="p-4 border  border-zinc-200">
+        <div v-if="showAddForm" class="p-4 border border-zinc-200">
           <h3 class="font-bold mb-3">Lägg till ny pryl</h3>
           <div class="flex flex-col gap-2">
             <InputText placeholder="Namn" v-model="addItemName" />
