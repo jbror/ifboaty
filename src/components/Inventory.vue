@@ -6,20 +6,20 @@
     </div>
 
     <!-- Grid Layout: DataTable (vänster) + Cards (höger) -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
       <!-- Vänster: DataTable (2/3 av bredden) -->
       <div class="lg:col-span-2">
-        <DataTable :value="displayItems" striped-rows show-gridlines size="small">
+        <DataTable :value="displayItems" striped-rows show-gridlines size="small" scrollable scroll-height="400px">
           <template #header>
             <div class="flex items-center justify-between">
               <span class="font-bold">Innehåll</span>
               <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="info" @click="showAddForm = !showAddForm" />
             </div>
           </template>
-          <Column field="id" header="Id"></Column>
-          <Column field="name" header="Namn"></Column>
-          <Column field="quantity" header="Antal"></Column>
-          <Column field="category" header="Kategori"></Column>
+          <Column field="id" header="Id" style="width: 25%"></Column>
+          <Column field="name" header="Namn" style="width: 25%"></Column>
+          <Column field="quantity" header="Antal" style="width: 25%"></Column>
+          <Column field="category" header="Kategori" style="width: 25%"></Column>
           <template #footer>
             <p class="text-center text-sm">
               <strong>{{ displayItems.length }}</strong> prylar • {{ selectedArea?.name || 'Alla områden' }} •
