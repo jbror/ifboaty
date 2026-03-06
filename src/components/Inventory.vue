@@ -29,7 +29,7 @@
         </DataTable>
 
         <!-- Add Item Form (visa/dölj) -->
-        <div v-if="showAddForm" class="p-4 border border-zinc-200">
+        <div v-if="showAddForm" class="p-4 mt-4 border border-zinc-200">
           <h3 class="font-bold mb-3">Lägg till ny pryl</h3>
           <div class="flex flex-col gap-2">
             <InputText placeholder="Namn" v-model="addItemName" />
