@@ -31,8 +31,8 @@
           <p v-else class="text-sm text-green-600 mb-2">Läggs till i: {{ selectedStorage.name }}</p>
           <div class="flex flex-col gap-2">
             <InputText placeholder="Namn" v-model="addItemName" />
-            <InputText placeholder="Id" v-model="addItemId" />
-            <InputText placeholder="Antal" v-model="addItemQuantity" />
+            <InputNumber placeholder="Id" v-model="addItemId" />
+            <InputNumber placeholder="Antal" v-model="addItemQuantity" />
             <InputText placeholder="Kategori" v-model="addItemCategory" />
             <Button label="Lägg till" severity="info" @click="addItem" :disabled="!selectedStorage" />
           </div>
@@ -155,8 +155,8 @@ function onStorageUnselect() {
 }
 
 const addItemName = ref('')
-const addItemId = ref('')
-const addItemQuantity = ref('')
+const addItemId = ref<number | null>(null)
+const addItemQuantity = ref<string | null>(null)
 const addItemCategory = ref('')
 
 function addItem() {
@@ -171,7 +171,7 @@ function addItem() {
 
   const newItem: Item = {
     name: addItemName.value,
-    id: Number(addItemId.value),
+    id: addItemId.value || 0,
     quantity: Number(addItemQuantity.value),
     category: addItemCategory.value,
   }
@@ -179,23 +179,22 @@ function addItem() {
   selectedStorage.value.items.push(newItem)
 
   addItemName.value = ''
-  addItemId.value = ''
-  addItemQuantity.value = ''
+  addItemId.value = null
+  addItemQuantity.value = null
   addItemCategory.value = ''
   showAddForm.value = false
 }
 
-function isValidItem(name: string, id: string, quantity: string): boolean {
-  if (name.trim() === '' || id.trim() === '' || quantity.trim() === '') {
+function isValidItem(name: string, id: number | null, quantity: string): boolean {
+  if (name.trim() === '' || id === null || quantity.trim() === '') {
     return false
   }
-  const idNum = Number(id)
   const quantityNum = Number(quantity)
 
-  if (!Number.isInteger(idNum) || !Number.isInteger(quantityNum)) {
+  if (!Number.isInteger(id) || !Number.isInteger(quantityNum)) {
     return false
   }
-  if (idNum <= 0 || quantityNum <= 0) {
+  if (id <= 0 || quantityNum <= 0) {
     return false
   }
 
