@@ -156,7 +156,7 @@ function onStorageUnselect() {
 
 const addItemName = ref('')
 const addItemId = ref<number | null>(null)
-const addItemQuantity = ref<string | null>(null)
+const addItemQuantity = ref<number | null>(null)
 const addItemCategory = ref('')
 
 function addItem() {
@@ -185,8 +185,8 @@ function addItem() {
   showAddForm.value = false
 }
 
-function isValidItem(name: string, id: number | null, quantity: string): boolean {
-  if (name.trim() === '' || id === null || quantity.trim() === '') {
+function isValidItem(name: string, id: number | null, quantity: number | null): boolean {
+  if (name.trim() === '' || id === null || quantity === null) {
     return false
   }
   const quantityNum = Number(quantity)
