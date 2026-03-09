@@ -67,14 +67,16 @@
       </template>
     </Menu>
     <ScrollPanel
-      class="flex-1 p-5"
+      class="flex-1"
       :dt="{
         bar: {
           background: '{primary.color}',
         },
       }"
     >
-      <router-view></router-view>
+      <div class="p-6">
+        <router-view></router-view>
+      </div>
     </ScrollPanel>
   </div>
 </template>
