@@ -80,6 +80,7 @@ app.use(PrimeVue, {
   theme: {
     preset: myTheme,
     options: {
+      darkModeSelector: false,
       cssLayer: {
         name: 'primevue',
         order: 'theme, base, primevue',

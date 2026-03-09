@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <Menu :model="menuItems" class="w-64 h-screen">
+  <div class="flex h-screen">
+    <Menu :model="menuItems" class="w-64">
       <template #start>
         <div class="h-38 mt-4 mb-4 mr-12">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
@@ -45,7 +45,13 @@
 
       <template #item="{ item, props }">
         <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
-          <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }" class="grid-cols-[auto_1_fr]">
+          <a
+            :href="href"
+            v-bind="props.action"
+            @click="navigate"
+            :class="{ 'active-menu-item': isExactActive }"
+            class="grid-cols-[auto_1_fr]"
+          >
             <span :class="item.icon" />
             <span class="px-2 py-2">{{ item.label }}</span>
           </a>
@@ -60,11 +66,16 @@
         </div>
       </template>
     </Menu>
-
-    <div class="flex-1 p-6 max-w-5xl">
-      <!-- Mitt content till höger om menyn -->
+    <ScrollPanel
+      class="flex-1 p-5"
+      :dt="{
+        bar: {
+          background: '{primary.color}',
+        },
+      }"
+    >
       <router-view></router-view>
-    </div>
+    </ScrollPanel>
   </div>
 </template>
 

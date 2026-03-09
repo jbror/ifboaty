@@ -91,8 +91,8 @@ const props = defineProps<{
 }>()
 
 const showAddForm = ref(false)
-const selectedAreaKey = ref<any>({})
-const selectedStorageKey = ref<any>({})
+const selectedAreaKey = ref({})
+const selectedStorageKey = ref({})
 const selectedArea = ref<Area | null>(null)
 const selectedStorage = ref<StorageUnit | null>(null)
 

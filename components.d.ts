@@ -31,6 +31,7 @@ declare module 'vue' {
     RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScrollPanel: typeof import('primevue/scrollpanel')['default']
     Todo: typeof import('./src/components/Todo.vue')['default']
     ToggleButton: typeof import('primevue/togglebutton')['default']
     Tree: typeof import('primevue/tree')['default']
