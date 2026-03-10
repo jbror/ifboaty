@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-screen">
-    <Menu :model="menuItems" class="w-64">
+    <Menu :model="menuItems" class="w-64 ">
       <template #start>
         <div class="h-38 mt-4 mb-4 mr-12">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
@@ -74,7 +74,7 @@
         },
       }"
     >
-      <div class="p-6">
+      <div class="max-w-7xl p-6">
         <router-view></router-view>
       </div>
     </ScrollPanel>

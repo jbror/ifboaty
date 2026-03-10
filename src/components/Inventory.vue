@@ -1,5 +1,4 @@
 <template>
-  <div class="w-full">
     <div class="mb-6">
       <h1 class="text-xl font-bold">Båt ID: {{ id }}</h1>
       <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
@@ -7,7 +6,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
       <div class="lg:col-span-2">
-        <DataTable :value="displayItems" striped-rows show-gridlines size="small" scrollable scroll-height="400px">
+        <DataTable :value="displayItems" striped-rows show-gridlines size="small" >
           <template #header>
             <div class="flex items-center justify-between">
               <span class="font-bold">Innehåll</span>
@@ -77,7 +76,7 @@
         </Card>
       </div>
     </div>
-  </div>
+  
 </template>
 
 <script setup lang="ts">
