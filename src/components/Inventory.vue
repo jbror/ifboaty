@@ -85,6 +85,7 @@ import boatData from '../data/myboatdata.ts'
 import { ref, computed } from 'vue'
 import type { TreeNode } from 'primevue/treenode'
 
+
 const props = defineProps<{
   id: string
 }>()

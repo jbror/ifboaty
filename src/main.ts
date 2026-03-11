@@ -74,6 +74,15 @@ const myTheme = definePreset(Aura, {
         focusColor: '{zinc.50}',
       },
     },
+    drawer: {
+      root: {
+        background: '#1d2937',
+        borderRadius: '0',
+        borderWidth: '0',
+        borderColor: 'transparent',
+        color: '{zinc.200}',
+      },
+    },
   },
 })
 app.use(PrimeVue, {
