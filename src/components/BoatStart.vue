@@ -54,7 +54,7 @@
             :href="href"
             @click="navigate"
             :class="{ 'active-menu-item': isExactActive }"
-            class="flex items-center gap-3 py-2 px-2 mt-2 hover:bg-white/15"
+            class="flex items-center gap-3 py-2 px-4 mt-2 cursor-pointer"
           >
             <span :class="item.icon" />
             <span>{{ item.label }}</span>
@@ -103,13 +103,7 @@
       </template>
       <template #item="{ item, props }">
         <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
-          <a
-            :href="href"
-            v-bind="props.action"
-            @click="navigate"
-            :class="{ 'active-menu-item': isExactActive }"
-            class="grid-cols-[auto_1_fr]"
-          >
+          <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }">
             <span :class="item.icon" />
             <span class="px-2 py-2">{{ item.label }}</span>
           </a>
@@ -175,6 +169,6 @@ const currentPage = computed(() => menuItems.find((item) => item.route === route
 .active-menu-item {
   background: rgba(255, 255, 255, 0.15);
   color: white;
-  font-weight: 600;
+  font-weight: 500;
 }
 </style>
