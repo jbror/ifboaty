@@ -29,6 +29,7 @@ declare module 'vue' {
     Menu: typeof import('primevue/menu')['default']
     MyBoat: typeof import('./src/components/MyBoat.vue')['default']
     Overview: typeof import('./src/components/Overview.vue')['default']
+    Panel: typeof import('primevue/panel')['default']
     RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

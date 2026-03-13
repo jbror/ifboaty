@@ -1,13 +1,20 @@
 <template>
   <div class="flex flex-col h-screen">
     <!-- Header - alltid på toppen -->
-    <div class="flex items-center gap-3 px-4 py-6 border-b border-amber-50 bg-[#1d2937]">
+        <Panel header="Header" toggleable>
+      <p class="m-0">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+        in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </Panel>
+
+    <div class="flex items-center  gap-3 px-4 py-6 border-b border-amber-50 bg-[#1d2937]">
       <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="md:hidden" />
       <span class="md:ml-5 text-white font-medium">{{ currentPage?.label }}</span>
-     
-
     </div>
-
+ 
     <!-- Main content area -->
     <div class="flex flex-1 overflow-hidden">
       <!-- Mobile Drawer -->
@@ -122,9 +129,11 @@
         </template>
       </Menu>
 
-      <ScrollPanel class="flex-1" :dt="{ bar: { background: '{primary.color}' } }">
+      <ScrollPanel class="flex-1 bg-slate-50" :dt="{ bar: { background: '{primary.color}' } }">
         <div class="max-w-6xl p-6">
-          <router-view></router-view>
+          <div class="bg-white rounded-lg shadow-sm p-6">
+            <router-view></router-view>
+          </div>
         </div>
       </ScrollPanel>
     </div>
