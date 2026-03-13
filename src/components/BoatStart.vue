@@ -10,8 +10,10 @@
       </p>
     </Panel> -->
 
-    <div class="flex items-center gap-3 px-4 py-3 border-b border-amber-50 bg-[#1d2937]">
-      <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="md:hidden" />
+    <!-- Ha en panel enbart på toppen i MITTEN och kanske vit? Typ navbar. Inte så mycket blått som det är nu med hela vägen -->
+
+    <div class="flex items-center gap-3 px-4 py-3 bg-[#1d2937] md:hidden">
+      <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" />
       <span class="md:ml-5 text-white font-medium">{{ currentPage?.label }}</span>
     </div>
 
@@ -129,7 +131,10 @@
         </template>
       </Menu>
 
-      <ScrollPanel class="flex-1 bg-slate-50" :dt="{ bar: { background: '{primary.color}' } }">
+      <ScrollPanel class="flex-1 bg-[#f9fcff]" :dt="{ bar: { background: '{primary.color}' } }">
+        <div class="flex justify-center py-3">
+          <Menubar :model="items" class="w-full max-w-5xl" />
+        </div>
         <div class="max-w-6xl p-2 pt-4">
           <Panel toggleable class="shadow-sm">
             <router-view></router-view>
@@ -141,6 +146,8 @@
         </div>
       </ScrollPanel>
     </div>
+
+
   </div>
 </template>
 
@@ -180,12 +187,59 @@ const menuItems: MenuItem[] = [
   },
 ]
 
+const items = ref([
+  {
+    label: 'Home',
+    icon: 'pi pi-home',
+  },
+  {
+    label: 'Features',
+    icon: 'pi pi-star',
+  },
+  {
+    label: 'Projects',
+    icon: 'pi pi-search',
+    items: [
+      {
+        label: 'Components',
+        icon: 'pi pi-bolt',
+      },
+      {
+        label: 'Blocks',
+        icon: 'pi pi-server',
+      },
+      {
+        label: 'UI Kit',
+        icon: 'pi pi-pencil',
+      },
+      {
+        label: 'Templates',
+        icon: 'pi pi-palette',
+        items: [
+          {
+            label: 'Apollo',
+            icon: 'pi pi-palette',
+          },
+          {
+            label: 'Ultima',
+            icon: 'pi pi-palette',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Contact',
+    icon: 'pi pi-envelope',
+  },
+])
+
 const currentPage = computed(() => menuItems.find((item) => item.route === route.name))
 </script>
 
 <style scoped>
 .active-menu-item {
-  background: rgba(26, 19, 19, 0.15);
+  background: rgba(248, 239, 239, 0.15);
   color: white;
   font-weight: 500;
 }
