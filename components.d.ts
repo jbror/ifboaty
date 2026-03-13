@@ -22,6 +22,8 @@ declare module 'vue' {
     Divider: typeof import('primevue/divider')['default']
     Drawer: typeof import('primevue/drawer')['default']
     Form: typeof import('@primevue/forms/form')['default']
+    IconField: typeof import('primevue/iconfield')['default']
+    InputIcon: typeof import('primevue/inputicon')['default']
     InputNumber: typeof import('primevue/inputnumber')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Inventory: typeof import('./src/components/Inventory.vue')['default']
@@ -35,8 +37,10 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     ScrollPanel: typeof import('primevue/scrollpanel')['default']
     Sidebar: typeof import('primevue/sidebar')['default']
+    SplitButton: typeof import('primevue/splitbutton')['default']
     Todo: typeof import('./src/components/Todo.vue')['default']
     ToggleButton: typeof import('primevue/togglebutton')['default']
+    Toolbar: typeof import('primevue/toolbar')['default']
     Tree: typeof import('primevue/tree')['default']
   }
 }

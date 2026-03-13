@@ -1,12 +1,12 @@
 <template>
     <div class="mb-6">
-      <h1 class="text-xl font-bold">Båt ID: {{ id }}</h1>
+      <h1 class="text-md font-bold">Båt ID: {{ id }}</h1>
       <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
       <div class="lg:col-span-2">
-        <DataTable :value="displayItems" striped-rows show-gridlines size="small" >
+        <DataTable class="border border-zinc-100" :value="displayItems" striped-rows show-gridlines size="small" >
           <template #header>
             <div class="flex items-center justify-between">
               <span class="font-bold">Innehåll</span>
@@ -38,8 +38,8 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-4">
-        <Card>
+      <div class="flex flex-col gap-4 ">
+        <Card class="border border-zinc-100">
           <template #title>
             <div class="flex items-center gap-2">
               <i class="pi pi-map-marker"></i>
@@ -57,7 +57,7 @@
           </template>
         </Card>
 
-        <Card>
+     <Card class="border border-zinc-100">
           <template #title>
             <div class="flex items-center gap-2">
               <i class="pi pi-box"></i>
