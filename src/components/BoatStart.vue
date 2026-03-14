@@ -18,7 +18,7 @@
     </div>
 
     <!-- Main content area -->
-    <div class="flex flex-1 overflow-hidden bg-[#f9fcff] justify-center p-4">
+    <div class="flex flex-1 overflow-hidden bg-slate-50 justify-center p-4">
       <!-- Mobile Drawer -->
       <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
         <template #header>
@@ -82,7 +82,7 @@
       </Drawer>
 
       <!-- Centered Content Wrapper -->
-      <div class="flex w-full max-w-7xl overflow-hidden border border-white rounded-xl shadow-lg">
+      <div class="flex w-full max-w-6xl overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
         <!-- Desktop Menu -->
         <Menu :model="menuItems" class="hidden md:block w-58">
           <template #start>
@@ -134,16 +134,28 @@
         </Menu>
 
         <ScrollPanel class="flex-1" :dt="{ bar: { background: '{primary.color}' } }">
-          <div class="flex justify-center py-3">
-            <Menubar :model="items" class="w-full max-w-5xl" />
-          </div>
-          <div class="max-w-6xl p-2 pt-4">
-            <Panel toggleable class="shadow-sm">
-              <router-view></router-view>
+    <Toolbar>
+    <template #start>
+        <Button icon="pi pi-plus" class="mr-2" severity="secondary" text />
+        <Button icon="pi pi-print" class="mr-2" severity="secondary" text />
+        <Button icon="pi pi-upload" severity="secondary" text />
+    </template>
 
-              <template #footer>
-                <Panel toggleable collapsed class="hidden"></Panel>
-              </template>
+    <template #center>
+        <IconField>
+            <InputIcon>
+                <i class="pi pi-search" />
+            </InputIcon>
+            <InputText placeholder="Search" />
+        </IconField>
+    </template>
+
+    <template #end> <SplitButton label="Save" :model="items"></SplitButton></template>
+</Toolbar>
+
+          <div class="p-4 pt-2">
+            <Panel class="shadow-sm">
+              <router-view></router-view>
             </Panel>
           </div>
         </ScrollPanel>
@@ -234,6 +246,7 @@ const items = ref([
     icon: 'pi pi-envelope',
   },
 ])
+
 
 const currentPage = computed(() => menuItems.find((item) => item.route === route.name))
 </script>
