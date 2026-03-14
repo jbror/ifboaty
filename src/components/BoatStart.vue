@@ -18,7 +18,7 @@
     </div>
 
     <!-- Main content area -->
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 overflow-hidden bg-[#f9fcff] justify-center p-4">
       <!-- Mobile Drawer -->
       <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
         <template #header>
@@ -81,70 +81,73 @@
         </template>
       </Drawer>
 
-      <!-- Desktop Menu -->
-      <Menu :model="menuItems" class="hidden md:block w-64">
-        <template #start>
-          <div class="h-38 mt-4 mb-4 mr-12">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-              <g
-                transform="translate(256,220) scale(1.6)"
-                stroke="white"
-                stroke-width="5"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="0" y1="-120" x2="0" y2="70" />
-                <path d="M 0 -110 L 95 40 L 0 40 Z" />
-                <path d="M 0 -100 L -75 40 L 0 40 Z" />
-                <path d="M -120 60 Q 0 85 120 60" />
-              </g>
-              <text
-                x="256"
-                y="430"
-                text-anchor="middle"
-                fill="white"
-                font-family="Segoe UI, Arial, sans-serif"
-                font-size="70"
-                font-weight="500"
-                letter-spacing="1"
-              >
-                ifBoaty
-              </text>
-            </svg>
-          </div>
-        </template>
-        <template #item="{ item, props }">
-          <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
-            <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }">
-              <span :class="item.icon" />
-              <span class="px-2 py-2">{{ item.label }}</span>
-            </a>
-          </router-link>
-        </template>
-        <template #end>
-          <div class="grid grid-cols-2 px-2 py-2">
-            <RouterLink to="/">
-              <Button size="small" label="Tillbaka hem" severity="secondary" />
-            </RouterLink>
-          </div>
-        </template>
-      </Menu>
+      <!-- Centered Content Wrapper -->
+      <div class="flex w-full max-w-7xl overflow-hidden border border-white rounded-xl shadow-lg">
+        <!-- Desktop Menu -->
+        <Menu :model="menuItems" class="hidden md:block w-58">
+          <template #start>
+            <div class="h-38 mt-4 mb-4 mr-12">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+                <g
+                  transform="translate(256,220) scale(1.6)"
+                  stroke="white"
+                  stroke-width="5"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="0" y1="-120" x2="0" y2="70" />
+                  <path d="M 0 -110 L 95 40 L 0 40 Z" />
+                  <path d="M 0 -100 L -75 40 L 0 40 Z" />
+                  <path d="M -120 60 Q 0 85 120 60" />
+                </g>
+                <text
+                  x="256"
+                  y="430"
+                  text-anchor="middle"
+                  fill="white"
+                  font-family="Segoe UI, Arial, sans-serif"
+                  font-size="70"
+                  font-weight="500"
+                  letter-spacing="1"
+                >
+                  ifBoaty
+                </text>
+              </svg>
+            </div>
+          </template>
+          <template #item="{ item, props }">
+            <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
+              <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }">
+                <span :class="item.icon" />
+                <span class="px-2 py-2">{{ item.label }}</span>
+              </a>
+            </router-link>
+          </template>
+          <template #end>
+            <div class="grid grid-cols-2 px-2 py-2">
+              <RouterLink to="/">
+                <Button size="small" label="Tillbaka hem" severity="secondary" />
+              </RouterLink>
+            </div>
+          </template>
+        </Menu>
 
-      <ScrollPanel class="flex-1 bg-[#f9fcff]" :dt="{ bar: { background: '{primary.color}' } }">
-        <div class="flex justify-center py-3">
-          <Menubar :model="items" class="w-full max-w-5xl" />
-        </div>
-        <div class="max-w-6xl p-2 pt-4">
-          <Panel toggleable class="shadow-sm">
-            <router-view></router-view>
+        <ScrollPanel class="flex-1" :dt="{ bar: { background: '{primary.color}' } }">
+          <div class="flex justify-center py-3">
+            <Menubar :model="items" class="w-full max-w-5xl" />
+          </div>
+          <div class="max-w-6xl p-2 pt-4">
+            <Panel toggleable class="shadow-sm">
+              <router-view></router-view>
 
-            <template #footer>
-              <Panel toggleable collapsed class="hidden"></Panel>
-            </template>
-          </Panel>
-        </div>
-      </ScrollPanel>
+              <template #footer>
+                <Panel toggleable collapsed class="hidden"></Panel>
+              </template>
+            </Panel>
+          </div>
+        </ScrollPanel>
+      </div>
     </div>
   </div>
 </template>
