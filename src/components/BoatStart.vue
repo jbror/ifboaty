@@ -1,21 +1,11 @@
 <template>
   <div class="flex flex-col h-screen">
-    <!-- Header - alltid på toppen -->
-    <!-- <Panel  :header="currentPage?.label?.toString()" toggleable collapsed >
-      <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-        in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-    </Panel> -->
-
-    <!-- Ha en panel enbart på toppen i MITTEN och kanske vit? Typ navbar. Inte så mycket blått som det är nu med hela vägen -->
-
-    <div class="flex items-center gap-3 px-4 py-3 bg-[#1d2937] md:hidden">
-      <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" />
-      <span class="md:ml-5 text-white font-medium">{{ currentPage?.label }}</span>
-    </div>
+    <Toolbar class="border-b border-gray-200">
+      <template #start>
+        <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="md:hidden mr-3" />
+        <span class="font-semibold">{{ currentPage?.label }}</span>
+      </template>
+    </Toolbar>
 
     <!-- Main content area -->
     <div class="flex flex-1 overflow-hidden bg-slate-50 justify-center p-4">
@@ -82,7 +72,7 @@
       </Drawer>
 
       <!-- Centered Content Wrapper -->
-      <div class="flex w-full max-w-6xl overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
+      <div class="flex w-full max-w-7xl overflow-hidden border border-zinc-100 rounded-xl shadow-lg bg-white">
         <!-- Desktop Menu -->
         <Menu :model="menuItems" class="hidden md:block w-58">
           <template #start>
@@ -134,26 +124,7 @@
         </Menu>
 
         <ScrollPanel class="flex-1" :dt="{ bar: { background: '{primary.color}' } }">
-    <Toolbar>
-    <template #start>
-        <Button icon="pi pi-plus" class="mr-2" severity="secondary" text />
-        <Button icon="pi pi-print" class="mr-2" severity="secondary" text />
-        <Button icon="pi pi-upload" severity="secondary" text />
-    </template>
-
-    <template #center>
-        <IconField>
-            <InputIcon>
-                <i class="pi pi-search" />
-            </InputIcon>
-            <InputText placeholder="Search" />
-        </IconField>
-    </template>
-
-    <template #end> <SplitButton label="Save" :model="items"></SplitButton></template>
-</Toolbar>
-
-          <div class="p-4 pt-2">
+          <div class="p-2 pt-4">
             <Panel class="shadow-sm">
               <router-view></router-view>
             </Panel>
@@ -199,54 +170,6 @@ const menuItems: MenuItem[] = [
     class: 'mt-4',
   },
 ]
-
-const items = ref([
-  {
-    label: 'Home',
-    icon: 'pi pi-home',
-  },
-  {
-    label: 'Features',
-    icon: 'pi pi-star',
-  },
-  {
-    label: 'Projects',
-    icon: 'pi pi-search',
-    items: [
-      {
-        label: 'Components',
-        icon: 'pi pi-bolt',
-      },
-      {
-        label: 'Blocks',
-        icon: 'pi pi-server',
-      },
-      {
-        label: 'UI Kit',
-        icon: 'pi pi-pencil',
-      },
-      {
-        label: 'Templates',
-        icon: 'pi pi-palette',
-        items: [
-          {
-            label: 'Apollo',
-            icon: 'pi pi-palette',
-          },
-          {
-            label: 'Ultima',
-            icon: 'pi pi-palette',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Contact',
-    icon: 'pi pi-envelope',
-  },
-])
-
 
 const currentPage = computed(() => menuItems.find((item) => item.route === route.name))
 </script>
