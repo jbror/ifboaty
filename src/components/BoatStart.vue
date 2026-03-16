@@ -51,7 +51,7 @@
             custom
             v-slot="{ href, navigate, isExactActive }"
           >
-            <div v-if="item.separator" class="border-t border-white my-2"></div>
+            <div v-if="item.separator" class="border-t border-gray-200 my-2"></div>
             <a
               v-else
               :href="href"
@@ -72,7 +72,7 @@
       </Drawer>
 
       <!-- Centered Content Wrapper -->
-      <div class="flex w-full max-w-7xl overflow-hidden border border-zinc-100 rounded-xl shadow-lg bg-white">
+      <div class="flex w-full max-w-7xl overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
         <!-- Desktop Menu -->
         <Menu :model="menuItems" class="hidden md:block w-58">
           <template #start>
@@ -115,7 +115,7 @@
             </router-link>
           </template>
           <template #end>
-            <div class="grid grid-cols-2 px-2 py-2">
+            <div class="px-2 py-2">
               <RouterLink to="/">
                 <Button size="small" label="Tillbaka hem" severity="secondary" />
               </RouterLink>
@@ -124,8 +124,8 @@
         </Menu>
 
         <ScrollPanel class="flex-1" :dt="{ bar: { background: '{primary.color}' } }">
-          <div class="p-2 pt-4">
-            <Panel class="shadow-sm">
+          <div class="p-4">
+            <Panel>
               <router-view></router-view>
             </Panel>
           </div>
@@ -164,10 +164,6 @@ const menuItems: MenuItem[] = [
     label: 'Min båt',
     icon: 'pi pi-cog',
     route: 'boat.myboat',
-  },
-  {
-    separator: true,
-    class: 'mt-4',
   },
 ]
 
