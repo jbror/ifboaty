@@ -1,7 +1,7 @@
 <template>
     <div class="mb-6">
       <h1 class="text-base font-bold">Båt ID: {{ id }}</h1>
-      <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
+      <p class="text-base">Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
@@ -81,7 +81,7 @@
 
 <script setup lang="ts">
 import type { Boat, Item, Area, StorageUnit } from '../types/types'
-import boatData from '../data/myboatdata'
+import boatData from '../data/myboatdata.ts'
 import { ref, computed } from 'vue'
 import type { TreeNode } from 'primevue/treenode'
 

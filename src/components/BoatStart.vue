@@ -172,8 +172,9 @@ const currentPage = computed(() => menuItems.find((item) => item.route === route
 
 <style scoped>
 .active-menu-item {
-  background: rgba(248, 239, 239, 0.15);
-  color: white;
-  font-weight: 500;
+  background-color: var(--p-primary-50);
+  color: var(--p-primary-700);
+  font-weight: 600;
+  border-radius: 6px;
 }
 </style>
