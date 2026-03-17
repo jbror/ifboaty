@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+
 import type { Boat, StorageUnit, Item, BoatData, Area } from '../types/types'
 
 const baseItems: Item[] = [
@@ -90,7 +90,7 @@ export default myBoat
 
 
 
-export const allStorageUnits = computed (() => myBoat.areas.flatMap((x) => x.storageUnits).flatMap((s) => s.name))
+export const allStorageUnits =  myBoat.areas.flatMap((x) => x.storageUnits).flatMap((s) => s.name)
 
 
 

@@ -63,7 +63,7 @@ const myTheme = definePreset(Aura, {
   components: {
     menu: {
       root: {
-        background: '#1d2937',
+        background: '{slate.800}',
         borderRadius: '0',
         borderColor: 'transparent',
         borderWidth: '0',
@@ -76,7 +76,7 @@ const myTheme = definePreset(Aura, {
     },
     drawer: {
       root: {
-        background: '#1d2937',
+        background: '{slate.800}',
         borderRadius: '0',
         borderWidth: '0',
         borderColor: 'transparent',

@@ -10,7 +10,7 @@ export interface Area {
   id: number
   name: string
   type: 'interior' | 'exterior'
-  storageUnits: StorageUnit[];
+  storageUnits: StorageUnit[]
 }
 
 export interface StorageUnit {

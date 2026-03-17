@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-screen">
-    <Toolbar class="border-b border-gray-200">
+    <Toolbar class="border-zinc-200">
       <template #start>
         <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="md:hidden mr-3" />
         <span class="font-semibold">{{ currentPage?.label }}</span>
@@ -8,7 +8,7 @@
     </Toolbar>
 
     <!-- Main content area -->
-    <div class="flex flex-1 overflow-hidden bg-slate-50 justify-center p-4">
+    <div class="flex flex-1 overflow-hidden bg-slate-50 justify-center">
       <!-- Mobile Drawer -->
       <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
         <template #header>
@@ -72,9 +72,9 @@
       </Drawer>
 
       <!-- Centered Content Wrapper -->
-      <div class="flex w-full max-w-7xl overflow-hidden border border-gray-200 rounded-xl shadow-lg bg-white">
+      <div class="flex w-full max-w-7xl overflow-hidden border border-zinc-200 rounded shadow-lg bg-white">
         <!-- Desktop Menu -->
-        <Menu :model="menuItems" class="hidden md:block w-58">
+        <Menu :model="menuItems" class="hidden md:block w-56">
           <template #start>
             <div class="h-38 mt-4 mb-4 mr-12">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
@@ -124,7 +124,7 @@
         </Menu>
 
         <ScrollPanel class="flex-1" :dt="{ bar: { background: '{primary.color}' } }">
-          <div class="p-4">
+          <div class="p-2">
             <Panel>
               <router-view></router-view>
             </Panel>

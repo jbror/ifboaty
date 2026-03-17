@@ -1,8 +1,8 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen pb-32 bg-[#1d2937]">
-    <div class="bg-white rounded-lg p-8 max-w-[672px] w-full">
-      <h1 class="text-[48px] mb-2.5 text-center">IFBoaty</h1>
-      <p class="text-[18px] mb-8 text-center">Välj eller skapa din båt för att komma vidare</p>
+  <div class="flex justify-center items-center min-h-screen pb-32 bg-surface-800">
+    <div class="bg-white rounded p-8 max-w-2xl w-full">
+      <h1 class=" text-5xl mb-2 text-center">IFBoaty</h1>
+      <p class="text-lg mb-4 text-center">Välj eller skapa din båt för att komma vidare</p>
 
       <Button label="Lägg till båt" icon="pi pi-plus" @click="displayDialog = true" severity="primary" class="mb-4 w-full"> </Button>
 
@@ -26,7 +26,7 @@
 
         <div class="flex justify-end gap-2">
           <Button type="button" label="Avbryt" severity="secondary" @click="displayDialog = false"></Button>
-          <Button type="button" label="Spara båt" severity="info" @click="saveBoat"></Button>
+          <Button type="button" label="Spara båt" severity="primary" @click="saveBoat"></Button>
         </div>
       </Dialog>
 
@@ -37,7 +37,7 @@
         <Column header="">
           <template #body="{ data, index }">
             <div class="flex gap-2">
-              <Button label="Välj" severity="info" size="small" @click="selectBoat(data)"> </Button>
+              <Button label="Välj" severity="primary" size="small" @click="selectBoat(data)"> </Button>
               <Button icon="pi pi-trash" severity="danger" size="small" text @click="boats.splice(index, 1)"> </Button>
             </div>
           </template>

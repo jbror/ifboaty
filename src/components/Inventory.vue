@@ -1,6 +1,6 @@
 <template>
     <div class="mb-6">
-      <h1 class="text-md font-bold">Båt ID: {{ id }}</h1>
+      <h1 class="text-base font-bold">Båt ID: {{ id }}</h1>
       <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
     </div>
 
@@ -10,7 +10,7 @@
           <template #header>
             <div class="flex items-center justify-between">
               <span class="font-bold">Innehåll</span>
-              <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="info" @click="showAddForm = !showAddForm" />
+              <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
             </div>
           </template>
           <Column field="id" header="Id" style="width: 25%"></Column>
@@ -33,7 +33,7 @@
             <InputNumber placeholder="Id" v-model="addItemId" />
             <InputNumber placeholder="Antal" v-model="addItemQuantity" />
             <InputText placeholder="Kategori" v-model="addItemCategory" />
-            <Button label="Lägg till" severity="info" @click="addItem" :disabled="!selectedStorage" />
+            <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@
 
 <script setup lang="ts">
 import type { Boat, Item, Area, StorageUnit } from '../types/types'
-import boatData from '../data/myboatdata.ts'
+import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
 import type { TreeNode } from 'primevue/treenode'
 
