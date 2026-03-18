@@ -1,82 +1,81 @@
 <template>
-    <div class="mb-6">
-      <h1 class="text-base font-bold">Båt ID: {{ id }}</h1>
-      <p class="text-base">Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
-    </div>
+  <div class="mb-6">
+    <h1 class="text-base font-bold">Båt ID: {{ id }}</h1>
+    <p class="text-base">Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
+  </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
-      <div class="lg:col-span-2">
-        <DataTable class="border border-zinc-100" :value="displayItems" striped-rows show-gridlines size="small" >
-          <template #header>
-            <div class="flex items-center justify-between">
-              <span class="font-bold">Innehåll</span>
-              <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
-            </div>
-          </template>
-          <Column field="id" header="Id" style="width: 25%"></Column>
-          <Column field="name" header="Namn" style="width: 25%"></Column>
-          <Column field="quantity" header="Antal" style="width: 25%"></Column>
-          <Column field="category" header="Kategori" style="width: 25%"></Column>
-          <template #footer>
-            <p class="text-center text-sm">
-              <strong>{{ displayItems.length }}</strong> prylar
-            </p>
-          </template>
-        </DataTable>
-
-        <div v-if="showAddForm" class="p-4 mt-4 border border-zinc-200">
-          <h3 class="font-bold mb-3">Lägg till ny pryl</h3>
-          <p v-if="!selectedStorage" class="text-sm text-orange-600 mb-2">Välj ett stuvfack först för att lägga till en pryl</p>
-          <p v-else class="text-sm text-green-600 mb-2">Läggs till i: {{ selectedStorage.name }}</p>
-          <div class="flex flex-col gap-2">
-            <InputText placeholder="Namn" v-model="addItemName" />
-            <InputNumber placeholder="Id" v-model="addItemId" />
-            <InputNumber placeholder="Antal" v-model="addItemQuantity" />
-            <InputText placeholder="Kategori" v-model="addItemCategory" />
-            <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
+    <div class="lg:col-span-2">
+      <!-- // Använd Dynamic Dialog i DataTable för lägga till också. Todo! -->
+      <DataTable class="border border-zinc-100" :value="displayItems" striped-rows show-gridlines size="small">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <span class="font-bold">Innehåll</span>
+            <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
           </div>
+        </template>
+        <Column field="id" header="Id" style="width: 5%"></Column>
+        <Column field="name" header="Namn" style="width: 40%"></Column>
+        <Column field="category" header="Kategori" style="width: 40%"></Column>
+        <Column field="quantity" header="Antal" style="width: 5%"></Column>
+        <template #footer>
+          <p class="text-center text-sm">
+            <strong>{{ displayItems.length }}</strong> prylar
+          </p>
+        </template>
+      </DataTable>
+
+      <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] max-w-150">
+        <div class="flex flex-col gap-2">
+          <p v-if="!selectedStorage" class="text-sm text-orange-600">Välj ett stuvfack först för att lägga till en pryl</p>
+          <p v-else class="text-sm text-green-600">Läggs till i: {{ selectedStorage.name }}</p>
+          <InputText placeholder="Namn" v-model="addItemName" />
+          <InputNumber placeholder="Id" v-model="addItemId" />
+          <InputNumber placeholder="Antal" v-model="addItemQuantity" />
+          <InputText placeholder="Kategori" v-model="addItemCategory" />
+          <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
         </div>
-      </div>
-
-      <div class="flex flex-col gap-4 ">
-        <Card class="border border-zinc-100">
-          <template #title>
-            <div class="flex items-center gap-2">
-              <i class="pi pi-map-marker"></i>
-              <span>Områden</span>
-            </div>
-          </template>
-          <template #content>
-            <Tree
-              :value="areaNodes"
-              selectionMode="single"
-              v-model:selectionKeys="selectedAreaKey"
-              @node-select="onAreaSelect"
-              @node-unselect="onAreaUnselect"
-            />
-          </template>
-        </Card>
-
-     <Card class="border border-zinc-100">
-          <template #title>
-            <div class="flex items-center gap-2">
-              <i class="pi pi-box"></i>
-              <span>Stuvfack</span>
-            </div>
-          </template>
-          <template #content>
-            <Tree
-              :value="storageNodes"
-              selectionMode="single"
-              v-model:selectionKeys="selectedStorageKey"
-              @node-select="onStorageSelect"
-              @node-unselect="onStorageUnselect"
-            />
-          </template>
-        </Card>
-      </div>
+      </Dialog>
     </div>
-  
+
+    <div class="flex flex-col gap-2">
+      <Card class="border border-zinc-100">
+        <template #title>
+          <div class="flex items-center gap-2">
+            <i class="pi pi-map-marker"></i>
+            <span>Områden</span>
+          </div>
+        </template>
+        <template #content>
+          <Tree
+            :value="areaNodes"
+            selectionMode="single"
+            v-model:selectionKeys="selectedAreaKey"
+            @node-select="onAreaSelect"
+            @node-unselect="onAreaUnselect"
+          />
+        </template>
+      </Card>
+
+      <Card class="border border-zinc-100">
+        <template #title>
+          <div class="flex items-center gap-2">
+            <i class="pi pi-box"></i>
+            <span>Stuvfack</span>
+          </div>
+        </template>
+        <template #content>
+          <Tree
+            :value="storageNodes"
+            selectionMode="single"
+            v-model:selectionKeys="selectedStorageKey"
+            @node-select="onStorageSelect"
+            @node-unselect="onStorageUnselect"
+          />
+        </template>
+      </Card>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -84,7 +83,6 @@ import type { Boat, Item, Area, StorageUnit } from '../types/types'
 import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
 import type { TreeNode } from 'primevue/treenode'
-
 
 const props = defineProps<{
   id: string
