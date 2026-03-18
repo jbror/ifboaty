@@ -1,3 +1,32 @@
+//Lite info:
+
+// Tema:        PrimeVue / Aura (anpassat preset: myTheme)
+//
+// Darkmode är disabled
+
+// Primärfärg: (Noir) zinc-skalan (zinc.950 = mörkast, zinc.50 = ljusast)
+//              Knappar, highlights och active-states följer zinc.
+//
+// Sidebar/Drawer/Menu: bg-slate-800 (mörk), text zinc.200 (ljusgrå)
+//              Hover: rgba(255,255,255, 0.15) — subtil vit overlay
+//              Aktiv menyrad: bg var(--p-primary-50), text var(--p-primary-700)
+//
+// Layout:     Boxad content-wrapper: max-w-7xl
+//
+// Borders:     border-zinc-100 eller border-zinc-200 
+//                         
+//
+// Skuggor:     shadow-lg (endast på huvud-wrappern)
+//
+// Border-radius: border-radius: 0 på Menu och Drawer (täcker hela kanten)
+//               
+//
+//
+// Knappar:     primary = huvudåtgärd
+//              secondary = avbryt / tillbaka
+//              danger = destruktiv åtgärd (ex. radera)
+// =============================================================
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'

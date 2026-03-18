@@ -1,5 +1,5 @@
 
-import type { Boat, StorageUnit, Item, BoatData, Area } from '../types/types'
+import type { Boat, StorageUnit, Item, Area } from '../types/types'
 
 const baseItems: Item[] = [
   {
@@ -97,11 +97,3 @@ export const allStorageUnits =  myBoat.areas.flatMap((x) => x.storageUnits).flat
 
 
 
-function getAllItems(): Item[] {
-  return myBoat.areas
-  .flatMap((area) => area.storageUnits)
-  .flatMap((unit) => unit.items)
-}
-
-
-export const allItemsInBoat: Item[] = getAllItems()

@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-col h-screen">
-    <Toolbar class="border-zinc-200">
+    <Toolbar class="bg-slate-800 text-white md:hidden">
       <template #start>
-        <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="md:hidden mr-3" />
+        <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="mr-3" />
         <span class="font-semibold">{{ currentPage?.label }}</span>
       </template>
     </Toolbar>
 
     <!-- Main content area -->
-    <div class="flex flex-1 overflow-hidden bg-slate-50 justify-center">
+    <div class="flex flex-1 overflow-hidden justify-center">
       <!-- Mobile Drawer -->
       <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
         <template #header>
@@ -51,7 +51,7 @@
             custom
             v-slot="{ href, navigate, isExactActive }"
           >
-            <div v-if="item.separator" class="border-t border-gray-200 my-2"></div>
+            <div v-if="item.separator" class="border-t border-zinc-200 my-2"></div>
             <a
               v-else
               :href="href"
@@ -72,7 +72,7 @@
       </Drawer>
 
       <!-- Centered Content Wrapper -->
-      <div class="flex w-full max-w-7xl overflow-hidden border border-zinc-200 rounded shadow-lg bg-white">
+      <div class="flex w-full max-w-7xl overflow-hidden shadow-lg">
         <!-- Desktop Menu -->
         <Menu :model="menuItems" class="hidden md:block w-56">
           <template #start>

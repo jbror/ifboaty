@@ -81,7 +81,7 @@
 
 <script setup lang="ts">
 import type { Boat, Item, Area, StorageUnit } from '../types/types'
-import boatData from '../data/myboatdata.ts'
+import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
 import type { TreeNode } from 'primevue/treenode'
 

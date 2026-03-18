@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center items-center min-h-screen pb-32 bg-surface-800">
     <div class="bg-white rounded p-8 max-w-2xl w-full">
-      <h1 class=" text-5xl mb-2 text-center">IFBoaty</h1>
+      <h1 class=" text-3xl mb-2 text-center">ifBoaty</h1>
       <p class="text-lg mb-4 text-center">Välj eller skapa din båt för att komma vidare</p>
 
       <Button label="Lägg till båt" icon="pi pi-plus" @click="displayDialog = true" severity="primary" class="mb-4 w-full"> </Button>
@@ -51,7 +51,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { Boat } from '../types/types'
-import myboatdata from '../data/myboatdata.ts'
+import myboatdata from '../data/myboatdata'
 
 const router = useRouter()
 

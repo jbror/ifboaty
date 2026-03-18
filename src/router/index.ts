@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Boat from '../components/Boat.vue'
-import BoatStart from '../components/BoatStart.vue'
+import Boat from '@/components/Boat.vue'
+import BoatStart from '@/components/BoatStart.vue'
 import Overview from '@/components/Overview.vue'
 import Inventory from '@/components/Inventory.vue'
 import Todo from '@/components/Todo.vue'
