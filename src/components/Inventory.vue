@@ -25,6 +25,46 @@
         </template>
       </DataTable>
 
+      <div class="flex items-center gap-2 mt-2 flex-wrap">
+        <Select
+          v-model="selectedArea"
+          :options="boatData.areas"
+          optionLabel="name"
+          placeholder="Alla områden"
+          showClear
+          size="small"
+          @change="onAreaChange"
+        >
+          <template #value="{ value }">
+            <div v-if="value" class="flex items-center gap-2">
+              <i :class="value.type === 'interior' ? 'pi pi-home' : 'pi pi-sun'"></i>
+              <span>{{ value.name }}</span>
+            </div>
+          </template>
+          <template #option="{ option }">
+            <div class="flex items-center gap-2">
+              <i :class="option.type === 'interior' ? 'pi pi-home' : 'pi pi-sun'"></i>
+              <span>{{ option.name }}</span>
+            </div>
+          </template>
+        </Select>
+
+        <Select v-model="selectedStorage" :options="storageUnits" optionLabel="name" placeholder="Alla stuvfack" showClear size="small">
+          <template #value="{ value }">
+            <div v-if="value" class="flex items-center gap-2">
+              <i class="pi pi-box"></i>
+              <span>{{ value.name }}</span>
+            </div>
+          </template>
+          <template #option="{ option }">
+            <div class="flex items-center gap-2">
+              <i class="pi pi-box"></i>
+              <span>{{ option.name }}</span>
+            </div>
+          </template>
+        </Select>
+      </div>
+
       <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] max-w-150">
         <div class="flex flex-col gap-2">
           <p v-if="!selectedStorage" class="text-sm text-orange-600">Välj ett stuvfack först för att lägga till en pryl</p>
@@ -38,40 +78,57 @@
       </Dialog>
     </div>
 
-    <div class="flex flex-col gap-2">
+    <!-- Tidslinje för att välja Area -->
+
+    <div class="flex flex-col gap-4">
       <Card class="border border-zinc-100">
         <template #title>
-          <div class="flex items-center gap-2">
-            <i class="pi pi-map-marker"></i>
-            <span>Områden</span>
-          </div>
+          <span class="text-sm font-semibold text-center block">Välj område</span>
         </template>
         <template #content>
-          <Tree
-            :value="areaNodes"
-            selectionMode="single"
-            v-model:selectionKeys="selectedAreaKey"
-            @node-select="onAreaSelect"
-            @node-unselect="onAreaUnselect"
-          />
+          <Timeline :value="[...boatData.areas].reverse()" class="w-full">
+            <template #marker="{ item }">
+              <button
+                class="w-8 h-8 rounded-full border-2 flex items-center justify-center cursor-pointer transition-colors"
+                :class="
+                  selectedArea?.id === item.id
+                    ? 'bg-primary border-primary text-white'
+                    : 'bg-white border-zinc-300 text-zinc-500 hover:border-primary'
+                "
+                @click="onAreaClick(item)"
+              >
+                <i :class="item.type === 'interior' ? 'pi pi-home text-xs' : 'pi pi-sun text-xs'"></i>
+              </button>
+            </template>
+            <template #content="{ item }">
+              <span
+                class="text-sm cursor-pointer"
+                :class="selectedArea?.id === item.id ? 'font-bold text-primary' : 'text-zinc-500'"
+                @click="onAreaClick(item)"
+                >{{ item.name }}</span
+              >
+            </template>
+          </Timeline>
         </template>
       </Card>
 
-      <Card class="border border-zinc-100">
+      <Card v-if="selectedArea" class="border border-zinc-100">
         <template #title>
-          <div class="flex items-center gap-2">
-            <i class="pi pi-box"></i>
-            <span>Stuvfack</span>
-          </div>
+          <span class="text-sm font-semibold">Stuvfack i {{ selectedArea.name }}</span>
         </template>
         <template #content>
-          <Tree
-            :value="storageNodes"
-            selectionMode="single"
-            v-model:selectionKeys="selectedStorageKey"
-            @node-select="onStorageSelect"
-            @node-unselect="onStorageUnselect"
-          />
+          <ul class="list-none p-0 m-0 flex flex-col gap-1">
+            <li
+              v-for="unit in selectedArea.storageUnits"
+              :key="unit.id"
+              class="flex items-center gap-2 px-2 py-2 rounded cursor-pointer transition-colors"
+              :class="selectedStorage?.id === unit.id ? 'bg-primary/10 font-semibold' : 'hover:bg-zinc-100'"
+              @click="onStorageClick(unit)"
+            >
+              <i class="pi pi-box text-sm text-zinc-400"></i>
+              <span class="text-sm">{{ unit.name }}</span>
+            </li>
+          </ul>
         </template>
       </Card>
     </div>
@@ -79,45 +136,23 @@
 </template>
 
 <script setup lang="ts">
-import type { Boat, Item, Area, StorageUnit } from '../types/types'
+import type { Item, Area, StorageUnit } from '../types/types'
 import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
-import type { TreeNode } from 'primevue/treenode'
 
 const props = defineProps<{
   id: string
 }>()
 
 const showAddForm = ref(false)
-const selectedAreaKey = ref({})
-const selectedStorageKey = ref({})
 const selectedArea = ref<Area | null>(null)
 const selectedStorage = ref<StorageUnit | null>(null)
 
-const areaNodes = computed<TreeNode[]>(() => {
-  return boatData.areas.map((area, index) => ({
-    key: `area-${index}`,
-    label: area.name,
-    icon: area.type === 'interior' ? 'pi pi-home' : 'pi pi-sun',
-    data: area,
-  }))
-})
-
-const storageNodes = computed<TreeNode[]>(() => {
-  let units: StorageUnit[] = []
-
+const storageUnits = computed(() => {
   if (selectedArea.value) {
-    units = selectedArea.value.storageUnits
-  } else {
-    units = boatData.areas.flatMap((area) => area.storageUnits)
+    return selectedArea.value.storageUnits
   }
-
-  return units.map((unit, index) => ({
-    key: `storage-${index}`,
-    label: unit.name,
-    icon: 'pi pi-box',
-    data: unit,
-  }))
+  return boatData.areas.flatMap((area) => area.storageUnits)
 })
 
 const displayItems = computed(() => {
@@ -132,24 +167,22 @@ const displayItems = computed(() => {
   return boatData.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
 })
 
-function onAreaSelect(node: TreeNode) {
-  selectedArea.value = node.data as Area
+function onAreaChange() {
   selectedStorage.value = null
-  selectedStorageKey.value = {}
 }
 
-function onAreaUnselect() {
-  selectedArea.value = null
-  selectedStorage.value = null
-  selectedStorageKey.value = {}
+function onAreaClick(area: Area) {
+  if (selectedArea.value?.id === area.id) {
+    selectedArea.value = null
+    selectedStorage.value = null
+  } else {
+    selectedArea.value = area
+    selectedStorage.value = null
+  }
 }
 
-function onStorageSelect(node: TreeNode) {
-  selectedStorage.value = node.data as StorageUnit
-}
-
-function onStorageUnselect() {
-  selectedStorage.value = null
+function onStorageClick(unit: StorageUnit) {
+  selectedStorage.value = selectedStorage.value?.id === unit.id ? null : unit
 }
 
 const addItemName = ref('')
