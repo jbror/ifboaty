@@ -87,6 +87,11 @@
         </template>
         <template #content>
           <Timeline :value="[...boatData.areas].reverse()" class="w-full">
+            <template #opposite="{ item }">
+              <span class="inline-flex min-w-8 items-center justify-center rounded-full bg-zinc-100 px-2 py-1 text-xs font-semibold text-zinc-600">
+                {{ getAreaItemCount(item) }}
+              </span>
+            </template>
             <template #marker="{ item }">
               <button
                 class="w-8 h-8 rounded-full border-2 flex items-center justify-center cursor-pointer transition-colors"
@@ -140,7 +145,11 @@ import type { Item, Area, StorageUnit } from '../types/types'
 import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
 
-const props = defineProps<{
+defineOptions({
+  name: 'InventoryView',
+})
+
+const { id } = defineProps<{
   id: string
 }>()
 
@@ -166,6 +175,10 @@ const displayItems = computed(() => {
 
   return boatData.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
 })
+
+function getAreaItemCount(area: Area) {
+  return area.storageUnits.reduce((total, unit) => total + unit.items.length, 0)
+}
 
 function onAreaChange() {
   selectedStorage.value = null
