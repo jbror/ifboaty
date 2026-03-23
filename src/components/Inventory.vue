@@ -145,9 +145,6 @@ import type { Item, Area, StorageUnit } from '../types/types'
 import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
 
-defineOptions({
-  name: 'InventoryView',
-})
 
 const { id } = defineProps<{
   id: string
