@@ -30,7 +30,7 @@ const sittbrunnStorage: StorageUnit = {
 }
 const sittbrunnArea: Area = {
   id: 2,
-  name: 'Sittbrunnen',
+  name: 'Sittbrunn',
   type: 'interior',
   storageUnits: [sittbrunnStorage],
 }
@@ -89,8 +89,8 @@ const ruffenArea: Area = {
       id: 43,
       name: 'Golvet',
       items: [
-        { id: 49, name: 'Vattenflaskor', quantity: 4, category: 'Dryck' },
-        { id: 50, name: 'Dyckert', quantity: 1, category: 'Utrustning' },
+        { id: 49, name: 'Vattenflaskor', quantity: 4, category: 'Nödvändigheter' },
+        { id: 50, name: 'Batteri', quantity: 1, category: 'System' },
       ],
     },
     {

@@ -88,13 +88,11 @@
         <template #content>
           <Timeline :value="[...boatData.areas].reverse()" class="w-full">
             <template #opposite="{ item }">
-              <span class="inline-flex min-w-8 items-center justify-center rounded-full bg-zinc-100 px-2 py-1 text-xs font-semibold text-zinc-600">
-                {{ getAreaItemCount(item) }}
-              </span>
+              <Badge :value="getAreaItemCount(item)" severity="secondary" />
             </template>
             <template #marker="{ item }">
               <button
-                class="w-8 h-8 rounded-full border-2 flex items-center justify-center cursor-pointer transition-colors"
+                class="w-8 h-8 rounded-full border flex items-center justify-center cursor-pointer transition-colors"
                 :class="
                   selectedArea?.id === item.id
                     ? 'bg-primary border-primary text-white'
@@ -107,8 +105,8 @@
             </template>
             <template #content="{ item }">
               <span
-                class="text-sm cursor-pointer"
-                :class="selectedArea?.id === item.id ? 'font-bold text-primary' : 'text-zinc-500'"
+                class="text-sm cursor-pointer transition-colors"
+                :class="selectedArea?.id === item.id ? 'font-bold text-primary' : 'text-zinc-500 hover:text-primary'"
                 @click="onAreaClick(item)"
                 >{{ item.name }}</span
               >
@@ -122,18 +120,14 @@
           <span class="text-sm font-semibold">Stuvfack i {{ selectedArea.name }}</span>
         </template>
         <template #content>
-          <ul class="list-none p-0 m-0 flex flex-col gap-1">
-            <li
-              v-for="unit in selectedArea.storageUnits"
-              :key="unit.id"
-              class="flex items-center gap-2 px-2 py-2 rounded cursor-pointer transition-colors"
-              :class="selectedStorage?.id === unit.id ? 'bg-primary/10 font-semibold' : 'hover:bg-zinc-100'"
-              @click="onStorageClick(unit)"
-            >
-              <i class="pi pi-box text-sm text-zinc-400"></i>
-              <span class="text-sm">{{ unit.name }}</span>
-            </li>
-          </ul>
+          <Listbox  v-model="selectedStorage"  :options="selectedArea.storageUnits" optionLabel="name" class="w-full  border-0 shadow-none ">
+            <template #option="{ option }">
+              <div class="flex items-center gap-2">
+                <i class="pi pi-box"></i>
+                <span>{{ option.name }}</span>
+              </div>
+            </template>
+          </Listbox>
         </template>
       </Card>
     </div>
@@ -144,7 +138,6 @@
 import type { Item, Area, StorageUnit } from '../types/types'
 import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
-
 
 const { id } = defineProps<{
   id: string
@@ -189,10 +182,6 @@ function onAreaClick(area: Area) {
     selectedArea.value = area
     selectedStorage.value = null
   }
-}
-
-function onStorageClick(unit: StorageUnit) {
-  selectedStorage.value = selectedStorage.value?.id === unit.id ? null : unit
 }
 
 const addItemName = ref('')
