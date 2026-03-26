@@ -1,137 +1,82 @@
 <template>
-  <div class="mb-6">
+  <div class="mb-4">
     <h1 class="text-base font-bold">Båt ID: {{ id }}</h1>
     <p class="text-base">Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
-    <div class="lg:col-span-2">
-      <!-- // Använd Dynamic Dialog i DataTable för lägga till också. Todo! -->
-      <DataTable class="border border-zinc-100" :value="displayItems" striped-rows show-gridlines size="small">
-        <template #header>
-          <div class="flex items-center justify-between">
-            <span class="font-bold">Innehåll</span>
-            <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
-          </div>
-        </template>
-        <Column field="id" header="Id" style="width: 5%"></Column>
-        <Column field="name" header="Namn" style="width: 40%"></Column>
-        <Column field="category" header="Kategori" style="width: 40%"></Column>
-        <Column field="quantity" header="Antal" style="width: 5%"></Column>
-        <template #footer>
-          <p class="text-center text-sm">
-            <strong>{{ displayItems.length }}</strong> prylar
-          </p>
-        </template>
-      </DataTable>
-
-      <div class="flex items-center gap-2 mt-2 flex-wrap">
-        <Select
-          v-model="selectedArea"
-          :options="boatData.areas"
-          optionLabel="name"
-          placeholder="Alla områden"
-          showClear
-          size="small"
-          @change="onAreaChange"
-        >
-          <template #value="{ value }">
-            <div v-if="value" class="flex items-center gap-2">
-              <i :class="value.type === 'interior' ? 'pi pi-home' : 'pi pi-sun'"></i>
-              <span>{{ value.name }}</span>
-            </div>
-          </template>
-          <template #option="{ option }">
-            <div class="flex items-center gap-2">
-              <i :class="option.type === 'interior' ? 'pi pi-home' : 'pi pi-sun'"></i>
-              <span>{{ option.name }}</span>
-            </div>
-          </template>
-        </Select>
-
-        <Select v-model="selectedStorage" :options="storageUnits" optionLabel="name" placeholder="Alla stuvfack" showClear size="small">
-          <template #value="{ value }">
-            <div v-if="value" class="flex items-center gap-2">
-              <i class="pi pi-box"></i>
-              <span>{{ value.name }}</span>
-            </div>
-          </template>
-          <template #option="{ option }">
-            <div class="flex items-center gap-2">
-              <i class="pi pi-box"></i>
-              <span>{{ option.name }}</span>
-            </div>
-          </template>
-        </Select>
-      </div>
-
-      <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] max-w-150">
-        <div class="flex flex-col gap-2">
-          <p v-if="!selectedStorage" class="text-sm text-orange-600">Välj ett stuvfack först för att lägga till en pryl</p>
-          <p v-else class="text-sm text-green-600">Läggs till i: {{ selectedStorage.name }}</p>
-          <InputText placeholder="Namn" v-model="addItemName" />
-          <InputNumber placeholder="Id" v-model="addItemId" />
-          <InputNumber placeholder="Antal" v-model="addItemQuantity" />
-          <InputText placeholder="Kategori" v-model="addItemCategory" />
-          <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
+  <!-- Områdesväljare -->
+  <div class="mb-3">
+    <p class="text-xs font-semibold text-muted-color uppercase mb-2">Område</p>
+    <SelectButton
+      size="small"
+      :modelValue="selectedArea"
+      @update:modelValue="onAreaSelect"
+      :options="boatData.areas"
+      optionLabel="name"
+      :allowEmpty="true"
+      class="flex-wrap gap-1"
+    >
+      <template #option="{ option }">
+        <div class="flex items-center gap-1">
+          <i :class="option.type === 'interior' ? 'pi pi-home text-xs' : 'pi pi-sun text-xs'"></i>
+          <span>{{ option.name }}</span>
+          <Badge size="small" :value="getAreaItemCount(option)" severity="secondary" class="ml-1" />
         </div>
-      </Dialog>
-    </div>
-
-    <!-- Tidslinje för att välja Area -->
-
-    <div class="flex flex-col gap-4">
-      <Card class="border border-zinc-100">
-        <template #title>
-          <span class="text-sm font-semibold text-center block">Välj område</span>
-        </template>
-        <template #content>
-          <Timeline :value="[...boatData.areas].reverse()" class="w-full">
-            <template #opposite="{ item }">
-              <Badge :value="getAreaItemCount(item)" severity="secondary" />
-            </template>
-            <template #marker="{ item }">
-              <button
-                class="w-8 h-8 rounded-full border flex items-center justify-center cursor-pointer transition-colors"
-                :class="
-                  selectedArea?.id === item.id
-                    ? 'bg-primary border-primary text-white'
-                    : 'bg-white border-zinc-300 text-zinc-500 hover:border-primary'
-                "
-                @click="onAreaClick(item)"
-              >
-                <i :class="item.type === 'interior' ? 'pi pi-home text-xs' : 'pi pi-sun text-xs'"></i>
-              </button>
-            </template>
-            <template #content="{ item }">
-              <span
-                class="text-sm cursor-pointer transition-colors"
-                :class="selectedArea?.id === item.id ? 'font-bold text-primary' : 'text-zinc-500 hover:text-primary'"
-                @click="onAreaClick(item)"
-                >{{ item.name }}</span
-              >
-            </template>
-          </Timeline>
-        </template>
-      </Card>
-
-      <Card v-if="selectedArea" class="border border-zinc-100">
-        <template #title>
-          <span class="text-sm font-semibold">Stuvfack i {{ selectedArea.name }}</span>
-        </template>
-        <template #content>
-          <Listbox  v-model="selectedStorage"  :options="selectedArea.storageUnits" optionLabel="name" class="w-full  border-0 shadow-none ">
-            <template #option="{ option }">
-              <div class="flex items-center gap-2">
-                <i class="pi pi-box"></i>
-                <span>{{ option.name }}</span>
-              </div>
-            </template>
-          </Listbox>
-        </template>
-      </Card>
-    </div>
+      </template>
+    </SelectButton>
   </div>
+
+  <!-- Stuvfack -->
+  <div v-if="selectedArea" class="mb-3">
+    <p class="text-xs font-semibold text-muted-color uppercase mb-2">Stuvfack i {{ selectedArea.name }}</p>
+    <SelectButton
+      size="small"
+      :modelValue="selectedStorage"
+      @update:modelValue="onStorageSelect"
+      :options="selectedArea.storageUnits"
+      optionLabel="name"
+      :allowEmpty="true"
+      class="flex-wrap gap-1"
+    >
+      <template #option="{ option }">
+        <div class="flex items-center gap-1">
+          <i class="pi pi-box text-xs"></i>
+          <span>{{ option.name }}</span>
+        </div>
+      </template>
+    </SelectButton>
+  </div>
+
+  <!-- Tabell -->
+  <DataTable class="border border-zinc-100" :value="displayItems" striped-rows show-gridlines size="small">
+    <template #header>
+      <div class="flex items-center justify-between">
+        <span class="font-bold">Innehåll</span>
+        <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
+      </div>
+    </template>
+    <Column field="id" header="Id" style="width: 5%"></Column>
+    <Column field="name" header="Namn" style="width: 40%"></Column>
+    <Column field="category" header="Kategori" style="width: 40%"></Column>
+    <Column field="quantity" header="Antal" style="width: 5%"></Column>
+    <template #footer>
+      <p class="text-center text-sm">
+        <strong>{{ displayItems.length }}</strong> prylar
+      </p>
+    </template>
+  </DataTable>
+
+  <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] max-w-150">
+    <div class="flex flex-col gap-2">
+      <p v-if="!selectedStorage" class="text-sm text-orange-600">Välj ett stuvfack först för att lägga till en pryl</p>
+      <p v-else class="text-sm text-green-600">Läggs till i: {{ selectedStorage.name }}</p>
+      <InputText placeholder="Namn" v-model="addItemName" />
+      <InputNumber placeholder="Id" v-model="addItemId" />
+      <InputNumber placeholder="Antal" v-model="addItemQuantity" />
+      <InputText placeholder="Kategori" v-model="addItemCategory" />
+      <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
+    </div>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -146,13 +91,6 @@ const { id } = defineProps<{
 const showAddForm = ref(false)
 const selectedArea = ref<Area | null>(null)
 const selectedStorage = ref<StorageUnit | null>(null)
-
-const storageUnits = computed(() => {
-  if (selectedArea.value) {
-    return selectedArea.value.storageUnits
-  }
-  return boatData.areas.flatMap((area) => area.storageUnits)
-})
 
 const displayItems = computed(() => {
   if (selectedStorage.value) {
@@ -170,18 +108,13 @@ function getAreaItemCount(area: Area) {
   return area.storageUnits.reduce((total, unit) => total + unit.items.length, 0)
 }
 
-function onAreaChange() {
+function onAreaSelect(value: Area | null) {
+  selectedArea.value = value
   selectedStorage.value = null
 }
 
-function onAreaClick(area: Area) {
-  if (selectedArea.value?.id === area.id) {
-    selectedArea.value = null
-    selectedStorage.value = null
-  } else {
-    selectedArea.value = area
-    selectedStorage.value = null
-  }
+function onStorageSelect(value: StorageUnit | null) {
+  selectedStorage.value = value
 }
 
 const addItemName = ref('')
