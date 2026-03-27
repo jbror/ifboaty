@@ -20,7 +20,7 @@
         <div class="flex items-center gap-1">
           <i :class="option.type === 'interior' ? 'pi pi-home text-xs' : 'pi pi-sun text-xs'"></i>
           <span>{{ option.name }}</span>
-          <Badge size="small" :value="getAreaItemCount(option)" severity="secondary" class="ml-1" />
+          <Badge :value="getAreaItemCount(option)" severity="secondary" />
         </div>
       </template>
     </SelectButton>
@@ -42,6 +42,7 @@
         <div class="flex items-center gap-1">
           <i class="pi pi-box text-xs"></i>
           <span>{{ option.name }}</span>
+          <Badge size="small" :value="option.items.length" severity="secondary" />
         </div>
       </template>
     </SelectButton>
@@ -83,6 +84,7 @@
 import type { Item, Area, StorageUnit } from '../types/types'
 import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
+import { item } from '@primeuix/themes/aura/breadcrumb'
 
 const { id } = defineProps<{
   id: string

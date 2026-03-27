@@ -124,7 +124,7 @@
         </Menu>
 
         <ScrollPanel class="flex-1" :dt="{ bar: { background: '{primary.color}' } }">
-          <div class="p-2">
+          <div class="p-1">
             <Panel>
               <router-view></router-view>
             </Panel>
