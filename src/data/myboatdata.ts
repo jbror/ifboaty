@@ -28,11 +28,18 @@ const sittbrunnStorage: StorageUnit = {
   name: 'Sittbrunnslåda',
   items: sittbrunnItems,
 }
+
+const sittbrunnStorageTwo: StorageUnit = {
+  id: 20,
+  name: 'LådaTampar',
+  items: sittbrunnItems,
+}
+
 const sittbrunnArea: Area = {
   id: 2,
   name: 'Sittbrunn',
   type: 'interior',
-  storageUnits: [sittbrunnStorage],
+  storageUnits: [sittbrunnStorage, sittbrunnStorageTwo], 
 }
 
 // Däck: id 30-39
