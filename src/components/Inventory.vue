@@ -49,7 +49,7 @@
   </div>
 
   <!-- Tabell -->
-  <DataTable class="border border-zinc-100" :value="displayItems" striped-rows show-gridlines size="small">
+  <DataTable :value="displayItems" striped-rows show-gridlines size="small">
     <template #header>
       <div class="flex items-center justify-between">
         <span class="font-bold">Innehåll</span>
@@ -68,12 +68,13 @@
   </DataTable>
 
   <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] max-w-150">
-    <div class="flex flex-col gap-2">
-      <p v-if="!selectedStorage" class="text-sm text-orange-600">Välj ett stuvfack först för att lägga till en pryl</p>
-      <p v-else class="text-sm text-green-600">Läggs till i: {{ selectedStorage.name }}</p>
-      <InputText placeholder="Namn" v-model="addItemName" />
-      <InputNumber placeholder="Id" v-model="addItemId" />
-      <InputNumber placeholder="Antal" v-model="addItemQuantity" />
+    <div class="flex flex-col gap-3">
+      <Message class="mt-2" v-if="!selectedStorage" severity="warn" :closable="false">Välj ett stuvfack först</Message>
+      <Message class="mt-2" v-else severity="success" :closable="false">Läggs till i: {{ selectedStorage.name }}</Message>
+
+      <InputText placeholder="Namn" v-model="addItemName" :invalid="submitted && addItemName.trim() === ''" />
+      <InputNumber placeholder="Id" v-model="addItemId" :invalid="submitted && !addItemId" />
+      <InputNumber placeholder="Antal" v-model="addItemQuantity" :invalid="submitted && !addItemQuantity" />
       <InputText placeholder="Kategori" v-model="addItemCategory" />
       <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
     </div>
@@ -81,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Item, Area, StorageUnit } from '../types/types'
+import type { Area, StorageUnit } from '../types/types'
 import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
 
@@ -122,47 +123,28 @@ const addItemName = ref('')
 const addItemId = ref<number | null>(null)
 const addItemQuantity = ref<number | null>(null)
 const addItemCategory = ref('')
+const submitted = ref(false)
 
 function addItem() {
-  if (!selectedStorage.value) {
-    alert('Välj ett stuvfack först!')
+  submitted.value = true
+
+  if (!selectedStorage.value || addItemName.value.trim() === '' || !addItemId.value || !addItemQuantity.value) {
     return
   }
 
-  if (!isValidItem(addItemName.value, addItemId.value, addItemQuantity.value)) {
-    return
-  }
-
-  const newItem: Item = {
+  selectedStorage.value.items.push({
     name: addItemName.value,
-    id: addItemId.value || 0,
-    quantity: Number(addItemQuantity.value),
+    id: addItemId.value,
+    quantity: addItemQuantity.value,
     category: addItemCategory.value,
-  }
-
-  selectedStorage.value.items.push(newItem)
+  })
 
   addItemName.value = ''
   addItemId.value = null
   addItemQuantity.value = null
   addItemCategory.value = ''
+  submitted.value = false
   showAddForm.value = false
-}
-
-function isValidItem(name: string, id: number | null, quantity: number | null): boolean {
-  if (name.trim() === '' || id === null || quantity === null) {
-    return false
-  }
-  const quantityNum = Number(quantity)
-
-  if (!Number.isInteger(id) || !Number.isInteger(quantityNum)) {
-    return false
-  }
-  if (id <= 0 || quantityNum <= 0) {
-    return false
-  }
-
-  return true
 }
 </script>
 

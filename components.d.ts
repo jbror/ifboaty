@@ -31,6 +31,7 @@ declare module 'vue' {
     Listbox: typeof import('primevue/listbox')['default']
     Menu: typeof import('primevue/menu')['default']
     Menubar: typeof import('primevue/menubar')['default']
+    Message: typeof import('primevue/message')['default']
     MyBoat: typeof import('./src/components/MyBoat.vue')['default']
     Overview: typeof import('./src/components/Overview.vue')['default']
     Panel: typeof import('primevue/panel')['default']
