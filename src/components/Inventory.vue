@@ -49,17 +49,28 @@
   </div>
 
   <!-- Tabell -->
-  <DataTable :value="displayItems" striped-rows show-gridlines size="small">
+  <DataTable class="mr-20" v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id">
     <template #header>
-      <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
         <span class="font-bold">Innehåll</span>
-        <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
+        <Button label="Lägg till" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
+        <Button
+          label="Ta bort"
+          icon="pi pi-trash"
+          size="small"
+          severity="danger"
+          variant="outlined"
+          @click="deleteItems"
+          :disabled="!selectedItems.length"
+        />
       </div>
     </template>
-    <Column field="id" header="Id" style="width: 5%"></Column>
-    <Column field="name" header="Namn" style="width: 40%"></Column>
-    <Column field="category" header="Kategori" style="width: 40%"></Column>
-    <Column field="quantity" header="Antal" style="width: 5%"></Column>
+    <Column selectionMode="multiple" style="width: 0%"></Column>
+    <Column field="id" header="Id" style="width: 0%"></Column>
+    <Column field="name" header="Namn" style="width: 5%"></Column>
+    <Column field="category" header="Kategori" style="width: 5%"></Column>
+    <Column field="quantity" header="Antal" style="width: 0%"></Column>
+
     <template #footer>
       <p class="text-center text-sm">
         <strong>{{ displayItems.length }}</strong> prylar
@@ -82,9 +93,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Area, StorageUnit } from '../types/types'
-import boatData from '../data/myboatdata'
-import { ref, computed } from 'vue'
+import type { Item, Area, StorageUnit } from '../types/types'
+import rawBoatData from '../data/myboatdata'
+import { ref, computed, reactive } from 'vue'
+
+const boatData = reactive(rawBoatData)
 
 const { id } = defineProps<{
   id: string
@@ -93,6 +106,7 @@ const { id } = defineProps<{
 const showAddForm = ref(false)
 const selectedArea = ref<Area | null>(null)
 const selectedStorage = ref<StorageUnit | null>(null)
+const selectedItems = ref<Item[]>([])
 
 const displayItems = computed(() => {
   if (selectedStorage.value) {
@@ -145,6 +159,19 @@ function addItem() {
   addItemCategory.value = ''
   submitted.value = false
   showAddForm.value = false
+}
+
+function deleteItems() {
+  const idsToDelete = new Set(selectedItems.value.map((item) => item.id))
+
+  for (const area of boatData.areas) {
+    for (const unit of area.storageUnits) {
+      const kept = unit.items.filter((item) => !idsToDelete.has(item.id))
+      unit.items.splice(0, unit.items.length, ...kept)
+    }
+  }
+
+  selectedItems.value = []
 }
 </script>
 
