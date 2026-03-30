@@ -23,6 +23,13 @@ const sittbrunnItems: Item[] = [
   { id: 21, name: 'Krok', quantity: 3, category: 'Redskap' },
   { id: 22, name: 'Flytväst', quantity: 4, category: 'Utrustning' },
 ]
+
+const sittbrunnItemsTwo: Item[] = [
+  { id: 23, name: 'Mejsel', quantity: 2, category: 'Verktyg' },
+  { id: 24, name: 'Vinsch', quantity: 3, category: 'Redskap' },
+  { id: 25, name: 'Boj', quantity: 4, category: 'Utrustning' },
+]
+
 const sittbrunnStorage: StorageUnit = {
   id: 20,
   name: 'Sittbrunnslåda',
@@ -30,16 +37,16 @@ const sittbrunnStorage: StorageUnit = {
 }
 
 const sittbrunnStorageTwo: StorageUnit = {
-  id: 20,
+  id: 21,
   name: 'LådaTampar',
-  items: sittbrunnItems,
+  items: sittbrunnItemsTwo,
 }
 
 const sittbrunnArea: Area = {
   id: 2,
   name: 'Sittbrunn',
   type: 'interior',
-  storageUnits: [sittbrunnStorage, sittbrunnStorageTwo], 
+  storageUnits: [sittbrunnStorage, sittbrunnStorageTwo],
 }
 
 // Däck: id 30-39
@@ -96,8 +103,8 @@ const ruffenArea: Area = {
       id: 43,
       name: 'Golvet',
       items: [
-        { id: 49, name: 'Vattenflaskor', quantity: 4, category: 'Nödvändigheter' },
-        { id: 50, name: 'Batteri', quantity: 1, category: 'System' },
+        { id: 54, name: 'Vattenflaskor', quantity: 4, category: 'Nödvändigheter' },
+        { id: 55, name: 'Batteri', quantity: 1, category: 'System' },
       ],
     },
     {
@@ -112,13 +119,13 @@ const ruffenArea: Area = {
   ],
 }
 
-// Förpik: id 50-59
+// Förpik: id 60-69
 const forpikItems: Item[] = [
-  { id: 50, name: 'Tamp', quantity: 2, category: 'Utrustning' },
-  { id: 51, name: 'Rullsegel', quantity: 1, category: 'Segel' },
+  { id: 60, name: 'Tamp', quantity: 2, category: 'Utrustning' },
+  { id: 61, name: 'Rullsegel', quantity: 1, category: 'Segel' },
 ]
 const forpikStorage: StorageUnit = {
-  id: 50,
+  id: 60,
   name: 'Saker runt fören',
   items: forpikItems,
 }

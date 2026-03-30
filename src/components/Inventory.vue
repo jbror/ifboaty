@@ -84,7 +84,12 @@
       <Message class="mt-2" v-else severity="success" :closable="false">Läggs till i: {{ selectedStorage.name }}</Message>
 
       <InputText placeholder="Namn" v-model="addItemName" :invalid="submitted && addItemName.trim() === ''" />
-      <InputNumber placeholder="Id" v-model="addItemId" :invalid="submitted && !addItemId" />
+      <InputNumber
+        placeholder="Id"
+        v-model="addItemId"
+        :invalid="(submitted && !addItemId) || (addItemId !== null && itemIdExists(addItemId))"
+      />
+      <Message v-if="addItemId && itemIdExists(addItemId)" severity="error" :closable="false">ID {{ addItemId }} finns redan</Message>
       <InputNumber placeholder="Antal" v-model="addItemQuantity" :invalid="submitted && !addItemQuantity" />
       <InputText placeholder="Kategori" v-model="addItemCategory" />
       <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
@@ -139,10 +144,20 @@ const addItemQuantity = ref<number | null>(null)
 const addItemCategory = ref('')
 const submitted = ref(false)
 
+function itemIdExists(id: number): boolean {
+  return boatData.areas.some((area) => area.storageUnits.some((unit) => unit.items.some((item) => item.id === id)))
+}
+
 function addItem() {
   submitted.value = true
 
-  if (!selectedStorage.value || addItemName.value.trim() === '' || !addItemId.value || !addItemQuantity.value) {
+  if (
+    !selectedStorage.value ||
+    addItemName.value.trim() === '' ||
+    !addItemId.value ||
+    !addItemQuantity.value ||
+    itemIdExists(addItemId.value)
+  ) {
     return
   }
 
