@@ -100,9 +100,9 @@
 <script setup lang="ts">
 import type { Item, Area, StorageUnit } from '../types/types'
 import rawBoatData from '../data/myboatdata'
-import { ref, computed, reactive } from 'vue'
+import { ref, computed } from 'vue'
 
-const boatData = reactive(rawBoatData)
+const boatData = ref(rawBoatData)
 
 const { id } = defineProps<{
   id: string
@@ -122,7 +122,7 @@ const displayItems = computed(() => {
     return selectedArea.value.storageUnits.flatMap((unit) => unit.items)
   }
 
-  return boatData.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
+  return boatData.value.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
 })
 
 function getAreaItemCount(area: Area) {
@@ -145,7 +145,7 @@ const addItemCategory = ref('')
 const submitted = ref(false)
 
 function itemIdExists(id: number): boolean {
-  return boatData.areas.some((area) => area.storageUnits.some((unit) => unit.items.some((item) => item.id === id)))
+  return boatData.value.areas.some((area) => area.storageUnits.some((unit) => unit.items.some((item) => item.id === id)))
 }
 
 function addItem() {
@@ -179,7 +179,7 @@ function addItem() {
 function deleteItems() {
   const idsToDelete = new Set(selectedItems.value.map((item) => item.id))
 
-  for (const area of boatData.areas) {
+  for (const area of boatData.value.areas) {
     for (const unit of area.storageUnits) {
       const kept = unit.items.filter((item) => !idsToDelete.has(item.id))
       unit.items.splice(0, unit.items.length, ...kept)
