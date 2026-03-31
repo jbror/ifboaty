@@ -72,7 +72,7 @@
       </Drawer>
 
       <!-- Centered Content Wrapper -->
-      <div class="flex w-full max-w-7xl overflow-hidden shadow-lg">
+      <div class="flex flex-col md:flex-row w-full md:max-w-7xl overflow-hidden shadow-lg h-full min-h-0">
         <!-- Desktop Menu -->
         <Menu :model="menuItems" class="hidden md:block w-56">
           <template #start>
@@ -123,13 +123,13 @@
           </template>
         </Menu>
 
-        <ScrollPanel class="flex-1" :dt="{ bar: { background: '{primary.color}' } }">
-          <div class="p-1">
-            <Panel>
+        <div class="flex-1 min-h-0 flex flex-col">
+          <ScrollPanel class="flex-1 min-h-0" :dt="{ bar: { background: '{primary.color}' } }">
+            <Panel class="h-full">
               <router-view></router-view>
             </Panel>
-          </div>
-        </ScrollPanel>
+          </ScrollPanel>
+        </div>
       </div>
     </div>
   </div>

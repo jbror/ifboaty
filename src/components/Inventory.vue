@@ -49,7 +49,7 @@
   </div>
 
   <!-- Tabell -->
-  <DataTable class="mr-20" v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id">
+  <DataTable v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id">
     <template #header>
       <div class="flex items-center gap-4">
         <span class="font-bold">Innehåll</span>
@@ -65,11 +65,11 @@
         />
       </div>
     </template>
-    <Column selectionMode="multiple" style="width: 0%"></Column>
-    <Column field="id" header="Id" style="width: 0%"></Column>
-    <Column field="name" header="Namn" style="width: 5%"></Column>
-    <Column field="category" header="Kategori" style="width: 5%"></Column>
-    <Column field="quantity" header="Antal" style="width: 0%"></Column>
+    <Column selectionMode="multiple" style="width: 2%"></Column>
+    <Column field="id" header="Id" style="width: 4%"></Column>
+    <Column field="name" header="Namn" style="width: 40%"></Column>
+    <Column field="category" header="Kategori" style="width: 40%"></Column>
+    <Column field="quantity" header="Antal" style="width: 4%"></Column>
 
     <template #footer>
       <p class="text-center text-sm">
