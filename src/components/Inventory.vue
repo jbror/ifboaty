@@ -181,11 +181,9 @@ function deleteItems() {
 
   for (const area of boatData.value.areas) {
     for (const unit of area.storageUnits) {
-      const kept = unit.items.filter((item) => !idsToDelete.has(item.id))
-      unit.items.splice(0, unit.items.length, ...kept)
+      unit.items = unit.items.filter((x) => !idsToDelete.has(x.id))
     }
   }
-
   selectedItems.value = []
 }
 </script>
