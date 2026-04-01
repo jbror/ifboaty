@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4">
+  <div class="mb-2">
     <h1 class="text-base font-bold">Båt ID: {{ id }}</h1>
     <p class="text-base">Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
   </div>
@@ -51,8 +51,8 @@
   <!-- Tabell -->
   <DataTable v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id">
     <template #header>
-      <div class="flex items-center gap-4">
-        <span class="font-bold">Innehåll</span>
+      <div class="flex items-center gap-2">
+        <p class="text-muted-color-emphasis font-medium">Innehåll</p>
         <Button label="Lägg till" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
         <Button
           label="Ta bort"
