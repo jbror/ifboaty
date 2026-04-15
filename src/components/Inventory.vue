@@ -1,7 +1,7 @@
 <template>
   <div class="mb-2">
     <h1 class="text-base font-bold">Båt ID: {{ id }}</h1>
-    <p class="text-base">Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
+    <p class="text-base">Här visas allt som finns i båten</p>
   </div>
 
   <!-- Områdesväljare -->
@@ -49,6 +49,9 @@
   </div>
 
   <!-- Tabell -->
+
+<!-- // Varför ändrar denna bredd på mobil när man byter innehåll? Ge default fast bredd? -->
+
   <DataTable v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id">
     <template #header>
       <div class="flex items-center gap-2">
