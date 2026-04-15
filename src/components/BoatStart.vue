@@ -125,9 +125,9 @@
 
         <div class="flex-1 min-h-0 flex flex-col">
           <ScrollPanel class="flex-1 min-h-0" :dt="{ bar: { background: '{primary.color}' } }">
-            <Panel>
+            <div class="bg-surface-0 rounded-xl shadow-sm m-2 p-2">
               <router-view></router-view>
-            </Panel>
+            </div>
           </ScrollPanel>
         </div>
       </div>
