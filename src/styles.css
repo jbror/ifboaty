@@ -1,2 +1,6 @@
 ﻿@import 'tailwindcss';
 @import 'tailwindcss-primeui';
+
+html {
+  scrollbar-gutter: stable;
+}
