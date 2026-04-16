@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col h-screen">
-    <Toolbar class="bg-slate-800 text-white md:hidden">
+  <div class="flex flex-col min-h-screen">
+    <Toolbar class="bg-slate-800 text-white md:hidden sticky top-0 z-10">
       <template #start>
         <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="mr-3" />
         <span class="font-semibold">{{ currentPage?.label }}</span>
@@ -8,7 +8,7 @@
     </Toolbar>
 
     <!-- Main content area -->
-    <div class="flex flex-1 overflow-hidden justify-center">
+    <div class="flex flex-1 justify-center">
       <!-- Mobile Drawer -->
       <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
         <template #header>
@@ -72,9 +72,12 @@
       </Drawer>
 
       <!-- Centered Content Wrapper -->
-      <div class="flex flex-col md:flex-row w-full md:max-w-7xl overflow-hidden shadow-lg h-full min-h-0">
+      <div class="flex flex-col md:flex-row w-full md:max-w-7xl shadow-lg">
         <!-- Desktop Menu -->
-        <Menu :model="menuItems" class="hidden md:block w-56">
+        <Menu
+          :model="menuItems"
+          class="hidden md:block w-56 md:sticky md:top-0 md:self-start md:min-h-screen md:max-h-screen md:overflow-auto"
+        >
           <template #start>
             <div class="h-38 mt-4 mb-4 mr-12">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
@@ -123,12 +126,10 @@
           </template>
         </Menu>
 
-        <div class="flex-1 min-h-0 flex flex-col">
-          <ScrollPanel class="flex-1 min-h-0" :dt="{ bar: { background: '{primary.color}' } }">
-            <div class="bg-surface-0 rounded-xl shadow-sm m-2 p-2">
-              <router-view></router-view>
-            </div>
-          </ScrollPanel>
+        <div class="flex-1">
+          <div class="bg-surface-0 rounded-xl shadow-sm m-2 p-2">
+            <router-view></router-view>
+          </div>
         </div>
       </div>
     </div>

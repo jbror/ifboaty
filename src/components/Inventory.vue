@@ -48,9 +48,7 @@
     </SelectButton>
   </div>
 
-  <!-- Tabell -->
 
-<!-- // Varför ändrar denna bredd på mobil när man byter innehåll? Ge default fast bredd? -->
 
   <DataTable v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id">
     <template #header>
