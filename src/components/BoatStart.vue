@@ -51,9 +51,7 @@
             custom
             v-slot="{ href, navigate, isExactActive }"
           >
-            <div v-if="item.separator" class="border-t border-zinc-200 my-2"></div>
             <a
-              v-else
               :href="href"
               @click="navigate"
               :class="{ 'active-menu-item': isExactActive }"
