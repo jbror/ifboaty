@@ -52,8 +52,17 @@
     <template #header>
       <div class="flex items-center gap-2">
         <p class="text-muted-color-emphasis font-medium">Innehåll</p>
-        <Button class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]" label="Lägg till" icon="pi pi-plus" icon-class="text-xs" size="small" severity="primary" @click="showAddForm = !showAddForm" />
         <Button
+          class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]"
+          label="Lägg till"
+          icon="pi pi-plus"
+          icon-class="text-xs"
+          size="small"
+          severity="primary"
+          @click="showAddForm = !showAddForm"
+        />
+        <Button
+          class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]"
           label="Ta bort"
           icon="pi pi-trash"
           size="small"
