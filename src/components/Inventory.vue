@@ -52,8 +52,9 @@
     <template #header>
       <div class="flex items-center gap-2">
         <p class="text-muted-color-emphasis font-medium">Innehåll</p>
-        <Button label="Lägg till" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
+        <Button  class="h-8" label="Lägg till" icon="pi pi-plus" size="small" severity="primary" @click="showAddForm = !showAddForm" />
         <Button
+          class="h-8"
           label="Ta bort"
           icon="pi pi-trash"
           size="small"
