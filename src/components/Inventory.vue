@@ -86,8 +86,10 @@
     </template>
   </DataTable>
 
-  <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] max-w-150">
+  <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] sm:w-[75vw] md:w-120">
     <div class="flex flex-col gap-3">
+
+      <!-- // Snygga till hur meddelandet dyker upp hur den tar plats. -->
       <Message class="mt-2" v-if="!selectedStorage" severity="warn" :closable="false">Välj ett stuvfack först</Message>
       <Message class="mt-2" v-else severity="success" :closable="false">Läggs till i: {{ selectedStorage.name }}</Message>
 

@@ -2,5 +2,10 @@
 @import 'tailwindcss-primeui';
 
 html {
+  /* Reserves space for scrollbar to prevent layout shift when it appears/disappears */
   scrollbar-gutter: stable;
+  /* Unset overflow to allow PrimeVue's blockScroll to work correctly with modals 
+  https://github.com/primefaces/primevue/issues/6848 */
+  overflow-x: unset;
+  overflow-y: unset;
 }
