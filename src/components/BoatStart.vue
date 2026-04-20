@@ -1,81 +1,17 @@
 <template>
-  <div class="flex flex-col min-h-screen">
-    <Toolbar class="bg-slate-800 text-white md:hidden sticky top-0 z-10">
+  <div class="flex flex-col h-screen overflow-hidden bg-slate-100">
+    <Toolbar class="bg-slate-800 text-white md:hidden">
       <template #start>
         <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="mr-3" />
         <span class="font-semibold">{{ currentPage?.label }}</span>
       </template>
     </Toolbar>
 
-    <!-- Main content area -->
-    <div class="flex flex-1 justify-center">
-      <!-- Mobile Drawer -->
-      <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
-        <template #header>
-          <div class="h-38">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-              <g
-                transform="translate(256,220) scale(1.6)"
-                stroke="white"
-                stroke-width="5"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="0" y1="-120" x2="0" y2="70" />
-                <path d="M 0 -110 L 95 40 L 0 40 Z" />
-                <path d="M 0 -100 L -75 40 L 0 40 Z" />
-                <path d="M -120 60 Q 0 85 120 60" />
-              </g>
-              <text
-                x="256"
-                y="430"
-                text-anchor="middle"
-                fill="white"
-                font-family="Segoe UI, Arial, sans-serif"
-                font-size="70"
-                font-weight="500"
-                letter-spacing="1"
-              >
-                ifBoaty
-              </text>
-            </svg>
-          </div>
-        </template>
-        <div>
-          <router-link
-            v-for="item in menuItems"
-            :key="item.route"
-            :to="{ name: item.route, params: { id: boatId } }"
-            @click="sidebarVisible = false"
-            custom
-            v-slot="{ href, navigate, isExactActive }"
-          >
-            <a
-              :href="href"
-              @click="navigate"
-              :class="{ 'active-menu-item': isExactActive }"
-              class="flex items-center gap-3 py-2 px-4 mt-2 cursor-pointer"
-            >
-              <span :class="item.icon" />
-              <span>{{ item.label }}</span>
-            </a>
-          </router-link>
-        </div>
-        <template #footer>
-          <RouterLink to="/" @click="sidebarVisible = false">
-            <Button label="Tillbaka hem" severity="secondary" />
-          </RouterLink>
-        </template>
-      </Drawer>
+    <div class="flex flex-1 overflow-hidden">
+      <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!"> </Drawer>
 
-      <!-- Centered Content Wrapper -->
-      <div class="flex flex-col md:flex-row w-full md:max-w-7xl shadow-lg">
-        <!-- Desktop Menu -->
-        <Menu
-          :model="menuItems"
-          class="hidden md:block w-56 md:sticky md:top-0 md:self-start md:min-h-screen md:max-h-screen md:overflow-auto"
-        >
+      <div class="flex flex-1 w-full overflow-hidden">
+        <Menu :model="menuItems" class="hidden md:block w-56 md:top-0 md:self-start md:min-h-screen md:max-h-screen md:overflow-auto">
           <template #start>
             <div class="h-38 mt-4 mb-4 mr-12">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
@@ -124,9 +60,11 @@
           </template>
         </Menu>
 
-        <div class="flex-1">
-          <div class="bg-surface-0 rounded-xl shadow-sm m-2 p-2">
-            <router-view></router-view>
+        <div class="flex flex-col flex-1 min-w-0">
+          <div class="flex-1 min-h-0 overflow-y-auto p-2">
+            <div class="bg-white rounded-xl shadow-sm min-h-full p-2 max-w-4xl">
+              <router-view></router-view>
+            </div>
           </div>
         </div>
       </div>
