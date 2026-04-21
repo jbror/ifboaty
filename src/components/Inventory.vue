@@ -48,8 +48,8 @@
     </SelectButton>
   </div>
 
-  <DataTable v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id" >
-    <template #header >
+  <DataTable v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id">
+    <template #header>
       <div class="flex items-center gap-2">
         <p class="text-muted-color-emphasis font-medium">Innehåll</p>
         <Button
@@ -88,7 +88,6 @@
 
   <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] sm:w-[75vw] md:w-120">
     <div class="flex flex-col gap-3">
-
       <!-- // Snygga till hur meddelandet dyker upp hur den tar plats. -->
       <Message class="mt-2" v-if="!selectedStorage" severity="warn" :closable="false">Välj ett stuvfack först</Message>
       <Message class="mt-2" v-else severity="success" :closable="false">Läggs till i: {{ selectedStorage.name }}</Message>
