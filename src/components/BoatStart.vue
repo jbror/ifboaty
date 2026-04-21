@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen  bg-slate-100">
+  <div class="flex flex-col h-screen bg-slate-100">
     <Toolbar class="bg-slate-800 text-white md:hidden">
       <template #start>
         <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="mr-3" />
@@ -7,7 +7,7 @@
       </template>
     </Toolbar>
 
-    <div class="flex flex-1 ">
+    <div class="flex flex-1">
       <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!"> </Drawer>
 
       <div class="flex flex-1 w-full overflow-hidden h-screen">
@@ -60,11 +60,9 @@
           </template>
         </Menu>
 
-        <div class="flex flex-col flex-1 min-w-0">
-          <div class="flex-1 min-h-0 overflow-y-auto p-2">
-            <div class="bg-white rounded-xl shadow-sm min-h-full p-2 max-w-4xl">
-              <router-view></router-view>
-            </div>
+        <div class="flex flex-col flex-1 overflow-y-auto p-2">
+          <div class="bg-white rounded-xl shadow-sm min-h-full p-2 max-w-4xl">
+            <router-view></router-view>
           </div>
         </div>
       </div>
