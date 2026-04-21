@@ -1,8 +1,7 @@
 ﻿@import 'tailwindcss';
 @import 'tailwindcss-primeui';
 
-html {
+.overflow-y-auto {
   /* Reserves space for scrollbar to prevent layout shift when it appears/disappears */
   scrollbar-gutter: stable;
-  
 }
