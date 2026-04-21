@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen bg-slate-100">
+  <div class="flex flex-col h-full bg-slate-100">
     <Toolbar class="bg-slate-800 text-white md:hidden">
       <template #start>
         <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="mr-3" />
