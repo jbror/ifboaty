@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen overflow-hidden bg-slate-100">
+  <div class="flex flex-col h-screen  bg-slate-100">
     <Toolbar class="bg-slate-800 text-white md:hidden">
       <template #start>
         <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="mr-3" />
@@ -7,11 +7,11 @@
       </template>
     </Toolbar>
 
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 ">
       <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!"> </Drawer>
 
-      <div class="flex flex-1 w-full overflow-hidden">
-        <Menu :model="menuItems" class="hidden md:block w-56 md:top-0 md:self-start md:min-h-screen md:max-h-screen md:overflow-auto">
+      <div class="flex flex-1 w-full overflow-hidden h-screen">
+        <Menu :model="menuItems" class="hidden md:block w-56 md:top-0 md:self-start md:min-h-screen md:max-h-screen">
           <template #start>
             <div class="h-38 mt-4 mb-4 mr-12">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
