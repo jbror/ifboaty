@@ -10,7 +10,7 @@
     <div class="flex flex-1">
       <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!"> </Drawer>
 
-      <div class="flex flex-1 w-full ">
+      <div class="flex flex-1 w-full">
         <Menu :model="menuItems" class="hidden md:block w-56 md:top-0 md:self-start md:min-h-screen h-full">
           <template #start>
             <div class="h-38 mt-4 mb-4 mr-12">
@@ -60,7 +60,7 @@
           </template>
         </Menu>
 
-        <div class="flex flex-col flex-1 overflow-y-auto p-2 ">
+        <div class="flex flex-col flex-1 overflow-y-auto p-2">
           <div class="bg-white rounded-xl shadow-sm min-h-full p-2 max-w-4xl">
             <router-view></router-view>
           </div>
