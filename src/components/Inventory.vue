@@ -48,7 +48,16 @@
     </SelectButton>
   </div>
 
-  <DataTable v-model:selection="selectedItems" :value="displayItems" striped-rows show-gridlines size="small" dataKey="id">
+  <DataTable
+    v-model:selection="selectedItems"
+    :value="displayItems"
+    resizableColumns
+    columnResizeMode="fit"
+    striped-rows
+    show-gridlines
+    size="small"
+    dataKey="id"
+  >
     <template #header>
       <div class="flex items-center gap-2">
         <p class="text-muted-color-emphasis font-medium">Innehåll</p>
@@ -74,10 +83,10 @@
       </div>
     </template>
     <Column selectionMode="multiple" style="width: 2%"></Column>
-    <Column field="id" header="Id" style="width: 4%"></Column>
+    <Column field="id" header="Id" style="width: 2%"></Column>
     <Column field="name" header="Namn" style="width: 40%"></Column>
     <Column field="category" header="Kategori" style="width: 40%"></Column>
-    <Column field="quantity" header="Antal" style="width: 4%"></Column>
+    <Column field="quantity" header="Antal" style="width: 2%"></Column>
 
     <template #footer>
       <p class="text-center text-sm">
