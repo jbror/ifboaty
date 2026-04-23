@@ -100,8 +100,11 @@
   <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] sm:w-[75vw] md:w-120">
     <div class="flex flex-col gap-3">
       <!-- // Snygga till hur meddelandet dyker upp hur den tar plats. -->
-      <Message class="mt-2" v-if="!selectedStorage" severity="warn" :closable="false">Välj ett stuvfack först</Message>
-      <Message class="mt-2" v-else severity="success" :closable="false">Läggs till i: {{ selectedStorage.name }}</Message>
+      
+      <!-- <Message class="mt-1" v-if="!selectedStorage" severity="warn" :closable="false">Välj ett stuvfack först</Message>
+      <Message class="mt-1" v-else severity="success" :closable="false">Läggs till i: {{ selectedStorage.name }}</Message> -->
+      
+      <Select v-model="selectedStorage" :options="allStorageUnits" ></Select>
 
       <InputText placeholder="Namn" v-model="addItemName" :invalid="submitted && addItemName.trim() === ''" />
       <InputNumber
@@ -119,7 +122,7 @@
 
 <script setup lang="ts">
 import type { Item, Area, StorageUnit } from '../types/types'
-import rawBoatData from '../data/myboatdata'
+import rawBoatData, { allStorageUnits } from '../data/myboatdata'
 import { ref, computed } from 'vue'
 
 const boatData = ref(rawBoatData)
