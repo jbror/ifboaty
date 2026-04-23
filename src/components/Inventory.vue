@@ -59,27 +59,29 @@
     dataKey="id"
   >
     <template #header>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center justify-between">
         <p class="text-muted-color-emphasis font-medium">Innehåll</p>
-        <Button
-          class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]"
-          label="Lägg till"
-          icon="pi pi-plus"
-          icon-class="text-xs"
-          size="small"
-          severity="primary"
-          @click="showAddForm = !showAddForm"
-        />
-        <Button
-          class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]"
-          label="Ta bort"
-          icon="pi pi-trash"
-          size="small"
-          severity="danger"
-          variant="outlined"
-          @click="deleteItems"
-          :disabled="!selectedItems.length"
-        />
+        <div class="flex gap-2">
+          <Button
+            class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]"
+            label="Lägg till"
+            icon="pi pi-plus"
+            icon-class="text-xs"
+            size="small"
+            severity="primary"
+            @click="showAddForm = !showAddForm"
+          />
+          <Button
+            class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]"
+            label="Ta bort"
+            icon="pi pi-trash"
+            size="small"
+            severity="danger"
+            variant="outlined"
+            @click="deleteItems"
+            :disabled="!selectedItems.length"
+          />
+        </div>
       </div>
     </template>
     <Column selectionMode="multiple" style="width: 2%"></Column>
