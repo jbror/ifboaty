@@ -11,7 +11,7 @@
       size="small"
       :modelValue="selectedArea"
       @update:modelValue="onAreaSelect"
-      :options="boatData.areas"
+      :options="boat.areas"
       optionLabel="name"
       :allowEmpty="true"
       class="flex-wrap gap-1"
@@ -31,8 +31,7 @@
     <p class="text-xs font-semibold text-muted-color uppercase mb-2">Stuvfack i {{ selectedArea.name }}</p>
     <SelectButton
       size="small"
-      :modelValue="selectedStorage"
-      @update:modelValue="onStorageSelect"
+      v-model="selectedStorage"
       :options="selectedArea.storageUnits"
       optionLabel="name"
       :allowEmpty="true"
@@ -104,7 +103,7 @@
 
       <Select
         v-model="selectedStorage"
-        :options="boatData.areas"
+        :options="boat.areas"
         optionLabel="name"
         optionGroupLabel="name"
         optionGroupChildren="storageUnits"
@@ -117,14 +116,14 @@
         </template>
       </Select>
 
-      <InputText placeholder="Namn" v-model="addItemName" :invalid="submitted && addItemName.trim() === ''" />
+      <InputText placeholder="Namn*" v-model="addItemName" :invalid="submitted && addItemName.trim() === ''" />
       <InputNumber
-        placeholder="Id"
+        placeholder="Id*"
         v-model="addItemId"
         :invalid="(submitted && !addItemId) || (addItemId !== null && itemIdExists(addItemId))"
       />
       <Message v-if="addItemId && itemIdExists(addItemId)" severity="error" :closable="false">ID {{ addItemId }} finns redan</Message>
-      <InputNumber placeholder="Antal" v-model="addItemQuantity" :invalid="submitted && !addItemQuantity" />
+      <InputNumber placeholder="Antal*" v-model="addItemQuantity" :invalid="submitted && !addItemQuantity" />
       <InputText placeholder="Kategori" v-model="addItemCategory" />
       <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
     </div>
@@ -133,10 +132,10 @@
 
 <script setup lang="ts">
 import type { Item, Area, StorageUnit } from '../types/types'
-import rawBoatData from '../data/myboatdata'
+import boatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
 
-const boatData = ref(rawBoatData)
+const boat = ref(boatData)
 
 const { id } = defineProps<{
   id: string
@@ -156,7 +155,7 @@ const displayItems = computed(() => {
     return selectedArea.value.storageUnits.flatMap((unit) => unit.items)
   }
 
-  return boatData.value.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
+  return boat.value.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
 })
 
 function getAreaItemCount(area: Area) {
@@ -168,18 +167,15 @@ function onAreaSelect(value: Area | null) {
   selectedStorage.value = null
 }
 
-function onStorageSelect(value: StorageUnit | null) {
-  selectedStorage.value = value
-}
-
 const addItemName = ref('')
 const addItemId = ref<number | null>(null)
 const addItemQuantity = ref<number | null>(null)
 const addItemCategory = ref('')
+
 const submitted = ref(false)
 
 function itemIdExists(id: number): boolean {
-  return boatData.value.areas.some((area) => area.storageUnits.some((unit) => unit.items.some((item) => item.id === id)))
+  return boat.value.areas.some((area) => area.storageUnits.some((unit) => unit.items.some((item) => item.id === id)))
 }
 
 function addItem() {
@@ -213,7 +209,7 @@ function addItem() {
 function deleteItems() {
   const idsToDelete = new Set(selectedItems.value.map((item) => item.id))
 
-  for (const area of boatData.value.areas) {
+  for (const area of boat.value.areas) {
     for (const unit of area.storageUnits) {
       unit.items = unit.items.filter((x) => !idsToDelete.has(x.id))
     }
