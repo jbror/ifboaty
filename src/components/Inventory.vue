@@ -99,8 +99,6 @@
 
   <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] sm:w-[75vw] md:w-120">
     <div class="flex flex-col gap-3">
-      <!-- // Snygga till hur meddelandet dyker upp hur den tar plats. -->
-
       <Message class="mt-1" v-if="!selectedStorage" severity="warn" :closable="false">Välj ett stuvfack först</Message>
       <Message class="mt-1" v-else severity="success" :closable="false">Läggs till i: {{ selectedStorage.name }}</Message>
 
@@ -110,11 +108,8 @@
         optionLabel="name"
         optionGroupLabel="name"
         optionGroupChildren="storageUnits"
+        placeholder="Välj stuvfack"
       >
-        <!-- Här! -->
-        <!-- Här! -->
-        <!-- Här! -->
-        <!-- Här! -->
         <template #optiongroup="slotProps">
           <i class="pi pi-box text-primary mr-1"></i>
           <span class="text-primary text-xs"></span>
@@ -138,18 +133,14 @@
 
 <script setup lang="ts">
 import type { Item, Area, StorageUnit } from '../types/types'
-import rawBoatData, { allStorageUnits, allAreas } from '../data/myboatdata'
+import rawBoatData from '../data/myboatdata'
 import { ref, computed } from 'vue'
-import { icon } from '@primeuix/themes/aura/avatar'
-import { IconField } from 'primevue'
 
 const boatData = ref(rawBoatData)
 
 const { id } = defineProps<{
   id: string
 }>()
-
-const cakes = ref<string[]>(['Kladdkaka', 'Tigerkaka'])
 
 const showAddForm = ref(false)
 const selectedArea = ref<Area | null>(null)

@@ -146,6 +146,3 @@ const myBoat: Boat = {
 
 export default myBoat
 
-export const allStorageUnits = myBoat.areas.flatMap((x) => x.storageUnits)
-
-export const allAreas = myBoat.areas.flatMap((x) => x)
