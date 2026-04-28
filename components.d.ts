@@ -13,6 +13,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Badge: typeof import('primevue/badge')['default']
     Boat: typeof import('./src/components/Boat.vue')['default']
+    BoatLogo: typeof import('./src/components/logo/BoatLogo.vue')['default']
     BoatStart: typeof import('./src/components/BoatStart.vue')['default']
     Button: typeof import('primevue/button')['default']
     ButtonGroup: typeof import('primevue/buttongroup')['default']
