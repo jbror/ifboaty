@@ -119,7 +119,7 @@
       <div class=" flex flex-1 flex-col items-center  overflow-y-auto p-2">
         <div class="bg-white rounded-xl shadow-sm  w-full p-2 md:max-w-11/12">
        
-          <router-view></router-view>
+          <router-view :boat="boatData"></router-view>
         </div>
       </div>
     </div>
@@ -130,6 +130,8 @@
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { MenuItem } from 'primevue/menuitem'
+import boatData from '../data/myboatdata'
+
 
 const route = useRoute()
 const boatId = computed(() => route.params.id)

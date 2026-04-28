@@ -1,10 +1,11 @@
 <template>
-  <div class="m-0">
-    <h1>Båt ID: {{ id }}</h1>
-    <p>/Overview</p>
+  <div class="mb-2">
+    <h1 class="text-base font-bold">Båt ID: {{ boat.id }}</h1>
+    <p class="text-base">Din dashboard</p>
+  </div>
 
-    <Button label="Show" size="small" @click="showText = !showText"></Button>
-    <div v-if="showText">
+  <Button label="Show" size="small" @click="showText = !showText"></Button>
+  <div v-if="showText">
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et metus leo. Sed sapien eros, hendrerit congue metus id, ullamcorper
       cursus est. Vestibulum consectetur tristique enim, sit amet semper nulla sodales ac. Nam non porta tellus. Aliquam erat volutpat.
@@ -98,21 +99,18 @@
       ultricies elementum est at consectetur. Nam sollicitudin interdum pellentesque. Aenean volutpat gravida turpis non vulputate. Vivamus
       lorem tortor, venenatis venenatis nibh a, consequat sagittis dolor.
     </p>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-
+import type { Boat } from '../types/types'
 import { ref } from 'vue'
 
-const showText = ref(false) 
+const showText = ref(false)
 
 const props = defineProps<{
-  id: string
+  boat: Boat
 }>()
 </script>
-
-
 
 <style scoped></style>

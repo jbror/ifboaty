@@ -1,6 +1,6 @@
 <template>
   <div class="mb-2">
-    <h1 class="text-base font-bold">Båt ID: {{ id }}</h1>
+    <h1 class="text-base font-bold">Båt ID: {{ boat.id }}</h1>
     <p class="text-base">Här visas allt som finns i båten</p>
   </div>
 
@@ -131,14 +131,12 @@
 </template>
 
 <script setup lang="ts">
-import type { Item, Area, StorageUnit } from '../types/types'
-import boatData from '../data/myboatdata'
+import type { Item, Area, StorageUnit, Boat } from '../types/types'
+
 import { ref, computed } from 'vue'
 
-const boat = ref(boatData)
-
-const { id } = defineProps<{
-  id: string
+const props = defineProps<{
+  boat: Boat
 }>()
 
 const showAddForm = ref(false)
@@ -155,7 +153,7 @@ const displayItems = computed(() => {
     return selectedArea.value.storageUnits.flatMap((unit) => unit.items)
   }
 
-  return boat.value.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
+  return props.boat.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
 })
 
 function getAreaItemCount(area: Area) {
@@ -175,7 +173,7 @@ const addItemCategory = ref('')
 const submitted = ref(false)
 
 function itemIdExists(id: number): boolean {
-  return boat.value.areas.some((area) => area.storageUnits.some((unit) => unit.items.some((item) => item.id === id)))
+  return props.boat.areas.some((area) => area.storageUnits.some((unit) => unit.items.some((item) => item.id === id)))
 }
 
 function addItem() {
@@ -209,7 +207,7 @@ function addItem() {
 function deleteItems() {
   const idsToDelete = new Set(selectedItems.value.map((item) => item.id))
 
-  for (const area of boat.value.areas) {
+  for (const area of props.boat.areas) {
     for (const unit of area.storageUnits) {
       unit.items = unit.items.filter((x) => !idsToDelete.has(x.id))
     }
