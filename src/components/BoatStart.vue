@@ -8,7 +8,7 @@
     </Toolbar>
 
     <div class="flex flex-1 overflow-hidden">
-        <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
+      <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
         <template #header>
           <div class="h-38">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
@@ -116,9 +116,8 @@
         </template>
       </Menu>
 
-      <div class=" flex flex-1 flex-col items-center  overflow-y-auto p-2">
-        <div class="bg-white rounded-xl shadow-sm  w-full p-2 md:max-w-11/12">
-       
+      <div class="flex flex-1 flex-col items-center overflow-y-auto p-2">
+        <div class="bg-white rounded-xl shadow-sm w-full p-2 md:max-w-11/12 xl:max-w-8/12">
           <router-view :boat="boatData"></router-view>
         </div>
       </div>
@@ -131,7 +130,6 @@ import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { MenuItem } from 'primevue/menuitem'
 import boatData from '../data/myboatdata'
-
 
 const route = useRoute()
 const boatId = computed(() => route.params.id)
