@@ -73,11 +73,15 @@
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { MenuItem } from 'primevue/menuitem'
-import boatData from '../data/myboatdata'
+// import boatData from '../data/myboatdata'
 import BoatLogo from './logo/BoatLogo.vue'
+
+import { boats } from '../data/boatStore'
 
 const route = useRoute()
 const boatId = computed(() => route.params.id)
+
+const boatData = computed(() => boats.value.find((b) => b.id === Number(boatId.value)))
 const sidebarVisible = ref(false)
 
 const menuItems: MenuItem[] = [
