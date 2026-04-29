@@ -6,27 +6,18 @@
 
       <Button label="Lägg till båt" icon="pi pi-plus" @click="displayDialog = true" severity="primary" class="mb-4 w-full"> </Button>
 
-      <Dialog v-model:visible="displayDialog" modal header="Lägg till en båt" :style="{ width: '450px' }">
-        <span class="block mb-5">Fyll i detaljerna för den nya båten.</span>
-
-        <div class="flex items-center gap-3 mb-4">
-          <label for="boatid" class="font-semibold w-15">ID</label>
-          <InputText id="boatid" class="flex-auto" v-model="idInput" autocomplete="off" />
-        </div>
-
-        <div class="flex items-center gap-3 mb-4">
-          <label for="boatname" class="font-semibold w-15">Namn</label>
-          <InputText id="boatname" class="flex-auto" v-model="newBoat.name" autocomplete="off" />
-        </div>
-
-        <div class="flex items-center gap-3 mb-6">
-          <label for="year" class="font-semibold w-15">År</label>
-          <InputText id="year" class="flex-auto" v-model="yearInput" autocomplete="off" />
-        </div>
-
-        <div class="flex justify-end gap-2">
+      <Dialog v-model:visible="displayDialog" modal header="Lägg till ny pryl" class="w-[95vw] sm:w-[75vw] md:w-120">
+        <div class="flex flex-col gap-3">
+          <InputText placeholder="Namn*" v-model="addBoatName" :invalid="submitted && addBoatName == ''" />
+          <InputNumber
+            placeholder="Id*"
+            v-model="addBoatId"
+            :invalid="(submitted && !addBoatId) || (addBoatId !== null && boatIdExists(addBoatId))"
+          />
+          <Message v-if="addBoatId && boatIdExists(addBoatId)" severity="error" :closable="false">ID {{ addBoatId }} finns redan</Message>
+          <InputNumber placeholder="Year*" v-model="addBoatYear" :invalid="submitted && !addBoatYear" />
+          <Button label="Lägg till" severity="primary" @click="saveBoat" />
           <Button type="button" label="Avbryt" severity="secondary" @click="displayDialog = false"></Button>
-          <Button type="button" label="Spara båt" severity="primary" @click="saveBoat"></Button>
         </div>
       </Dialog>
 
@@ -53,32 +44,34 @@ import { useRouter } from 'vue-router'
 import type { Boat } from '../types/types'
 import { boats } from '../data/boatStore'
 
+const addBoatName = ref('')
+const addBoatId = ref<number | null>(null)
+const addBoatYear = ref<number | null>(null)
+const submitted = ref(false)
+
 const router = useRouter()
 
 const displayDialog = ref(false)
 
-const idInput = ref<string>('')
-const yearInput = ref<string>('')
-
-const newBoat = ref<Boat>({
-  id: 0,
-  name: '',
-  year: 0,
-  areas: [],
-})
-
 const saveBoat = () => {
-  const id = parseInt(idInput.value) || 0
-  const year = parseInt(yearInput.value) || 0
+  submitted.value = true
 
-  if (newBoat.value.name.trim() && id > 0 && year > 0) {
-    boats.value.push({ ...newBoat.value, id: id, year: year })
-
-    newBoat.value = { id: 0, name: '', year: 0, areas: [] }
-    idInput.value = ''
-    yearInput.value = ''
-    displayDialog.value = false
+  if (addBoatName.value.trim() === '' || !addBoatId.value || !addBoatYear.value || boatIdExists(addBoatId.value)) {
+    return
   }
+
+  boats.value.push({ id: addBoatId.value!, name: addBoatName.value, year: addBoatYear.value, areas: [] })
+
+  addBoatName.value = ''
+  addBoatId.value = null
+  addBoatYear.value = null
+
+  displayDialog.value = false
+  submitted.value = false
+}
+
+function boatIdExists(id: number): boolean {
+  return boats.value.some((x) => x.id === id)
 }
 
 const selectBoat = (boat: Boat) => {
