@@ -51,13 +51,9 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { Boat } from '../types/types'
-// import myboatdata from '../data/myboatdata'
-
 import { boats } from '../data/boatStore'
 
 const router = useRouter()
-
-// const boats = ref<Boat[]>([myboatdata])
 
 const displayDialog = ref(false)
 
@@ -86,9 +82,6 @@ const saveBoat = () => {
 }
 
 const selectBoat = (boat: Boat) => {
-    // router.push(`/boat/${boat.id}`)
-    router.push({ name: 'boat.overview', params: { id: boat.id } })
-
-  // router.push({ name: 'boatstart', params: { id: boat.id } })
+  router.push({ name: 'boat.overview', params: { id: boat.id } })
 }
 </script>

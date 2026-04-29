@@ -73,9 +73,7 @@
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { MenuItem } from 'primevue/menuitem'
-// import boatData from '../data/myboatdata'
 import BoatLogo from './logo/BoatLogo.vue'
-
 import { boats } from '../data/boatStore'
 
 const route = useRoute()
