@@ -1,12 +1,12 @@
 <template>
   <div class="flex justify-center items-center min-h-screen pb-32 bg-slate-800">
     <div class="bg-white rounded p-8 max-w-2xl w-full">
-      <h1 class="text-3xl mb-2 text-center font-medium ">ifBoaty</h1>
+      <h1 class="text-3xl mb-2 text-center font-medium">ifBoaty</h1>
       <p class="text-lg mb-4 text-center">Välj eller skapa din båt för att komma vidare</p>
 
       <Button label="Lägg till båt" icon="pi pi-plus" @click="displayDialog = true" severity="primary" class="mb-4 w-full"> </Button>
 
-      <Dialog v-model:visible="displayDialog" modal header="Skapa båt" class="w-[95vw] sm:w-[75vw] md:w-120">
+      <Dialog v-model:visible="displayDialog" @hide="submitted = false" modal header="Skapa båt" class="w-[95vw] sm:w-[75vw] md:w-120">
         <div class="flex flex-col gap-3">
           <InputText placeholder="Namn*" v-model="addBoatName" :invalid="submitted && addBoatName == ''" />
           <InputNumber
@@ -17,7 +17,6 @@
           <Message v-if="addBoatId && boatIdExists(addBoatId)" severity="error" :closable="false">ID {{ addBoatId }} finns redan</Message>
           <InputNumber placeholder="Year*" v-model="addBoatYear" :invalid="submitted && !addBoatYear" />
           <Button label="Lägg till" severity="primary" @click="saveBoat" />
-          <!-- <Button type="button" label="Avbryt" severity="secondary" @click="displayDialog = false"></Button> -->
         </div>
       </Dialog>
 
@@ -29,9 +28,7 @@
           <template #body="{ data: boat }">
             <div class="flex gap-2">
               <Button label="Välj" severity="primary" size="small" @click="selectBoat(boat)"> </Button>
-              <!-- <Button icon="pi pi-trash" severity="danger" size="small" text @click="boats.splice(index, 1)"> </Button> -->
               <Button icon="pi pi-trash" severity="danger" size="small" text @click="deleteBoat(boat)"> </Button>
-
             </div>
           </template>
         </Column>
@@ -50,14 +47,11 @@ const addBoatName = ref('')
 const addBoatId = ref<number | null>(null)
 const addBoatYear = ref<number | null>(null)
 const submitted = ref(false)
-
 const router = useRouter()
-
 const displayDialog = ref(false)
 
-
 const deleteBoat = (boat: Boat) => {
-  boats.value = boats.value.filter((x)=> x.id !== boat.id)
+  boats.value = boats.value.filter((b) => b.id !== boat.id)
 }
 
 const saveBoat = () => {
@@ -77,7 +71,7 @@ const saveBoat = () => {
   submitted.value = false
 }
 
-function boatIdExists(id: number): boolean {
+const boatIdExists = (id: number): boolean => {
   return boats.value.some((x) => x.id === id)
 }
 
