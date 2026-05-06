@@ -48,6 +48,7 @@
   </div>
 
   <DataTable
+    class="pb-10"
     v-model:selection="selectedItems"
     :value="displayItems"
     resizableColumns
@@ -57,12 +58,11 @@
     size="small"
     dataKey="id"
     paginator
-    :rows="10"  
+    :rows="10"
     :rows-per-page-options="[5, 10, 15, 20, 100]"
-    paginatorTemplate="RowsPerPageDropdown PagesLink FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-    currentPageReportTemplate="{first} to {last} of {totalRecords} "
+    paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+    currentPageReportTemplate="{first} till {last} av {totalRecords} prylar"
   >
-    
     <template #header>
       <div class="flex items-center justify-between">
         <p class="text-muted-color-emphasis font-medium">Innehåll</p>
@@ -94,13 +94,6 @@
     <Column field="name" header="Namn" style="width: 40%"></Column>
     <Column field="category" header="Kategori" style="width: 40%"></Column>
     <Column field="quantity" header="Antal" style="width: 2%"></Column>
-
-    <!-- Ska ersättas med min paginator template? Undersök -->
-    <template #footer>
-      <p class="text-center text-sm">
-        <strong>{{ displayItems.length }}</strong> prylar
-      </p>
-    </template>
   </DataTable>
 
   <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] sm:w-[75vw] md:w-120">
@@ -118,7 +111,7 @@
       >
         <template #optiongroup="slotProps">
           <i class="pi pi-box text-primary mr-1"></i>
-          <span class="text-primary text-xs"></span>
+
           <span class="text-primary text-xs">{{ slotProps.option.name }} </span>
         </template>
       </Select>
