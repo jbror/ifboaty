@@ -56,7 +56,13 @@
     show-gridlines
     size="small"
     dataKey="id"
+    paginator
+    :rows="10"  
+    :rows-per-page-options="[5, 10, 15, 20, 100]"
+    paginatorTemplate="RowsPerPageDropdown PagesLink FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+    currentPageReportTemplate="{first} to {last} of {totalRecords} "
   >
+    
     <template #header>
       <div class="flex items-center justify-between">
         <p class="text-muted-color-emphasis font-medium">Innehåll</p>
@@ -89,6 +95,7 @@
     <Column field="category" header="Kategori" style="width: 40%"></Column>
     <Column field="quantity" header="Antal" style="width: 2%"></Column>
 
+    <!-- Ska ersättas med min paginator template? Undersök -->
     <template #footer>
       <p class="text-center text-sm">
         <strong>{{ displayItems.length }}</strong> prylar
