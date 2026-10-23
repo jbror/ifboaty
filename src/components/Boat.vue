@@ -1,32 +1,22 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen pb-32 bg-[#1d2937]">
-    <div class="bg-white rounded-lg p-8 max-w-[672px] w-full">
-      <h1 class="text-[48px] mb-2.5 text-center">IFBoaty</h1>
-      <p class="text-[18px] mb-8 text-center">Välj eller skapa din båt för att komma vidare</p>
+  <div class="flex justify-center items-center min-h-screen pb-32 bg-slate-800">
+    <div class="bg-white rounded p-8 max-w-2xl w-full">
+      <h1 class="text-3xl mb-2 text-center font-medium">ifBoaty</h1>
+      <p class="text-lg mb-4 text-center">Välj eller skapa din båt för att komma vidare</p>
 
       <Button label="Lägg till båt" icon="pi pi-plus" @click="displayDialog = true" severity="primary" class="mb-4 w-full"> </Button>
 
-      <Dialog v-model:visible="displayDialog" modal header="Lägg till en båt" :style="{ width: '450px' }">
-        <span class="block mb-5">Fyll i detaljerna för den nya båten.</span>
-
-        <div class="flex items-center gap-3 mb-4">
-          <label for="boatid" class="font-semibold w-15">ID</label>
-          <InputText id="boatid" class="flex-auto" v-model="idInput" autocomplete="off" />
-        </div>
-
-        <div class="flex items-center gap-3 mb-4">
-          <label for="boatname" class="font-semibold w-15">Namn</label>
-          <InputText id="boatname" class="flex-auto" v-model="newBoat.name" autocomplete="off" />
-        </div>
-
-        <div class="flex items-center gap-3 mb-6">
-          <label for="year" class="font-semibold w-15">År</label>
-          <InputText id="year" class="flex-auto" v-model="yearInput" autocomplete="off" />
-        </div>
-
-        <div class="flex justify-end gap-2">
-          <Button type="button" label="Avbryt" severity="secondary" @click="displayDialog = false"></Button>
-          <Button type="button" label="Spara båt" severity="info" @click="saveBoat"></Button>
+      <Dialog v-model:visible="displayDialog" @hide="submitted = false" modal header="Skapa båt" class="w-[95vw] sm:w-[75vw] md:w-120">
+        <div class="flex flex-col gap-3">
+          <InputText placeholder="Namn*" v-model="addBoatName" :invalid="submitted && addBoatName == ''" />
+          <InputNumber
+            placeholder="Id*"
+            v-model="addBoatId"
+            :invalid="(submitted && !addBoatId) || (addBoatId !== null && boatIdExists(addBoatId))"
+          />
+          <Message v-if="addBoatId && boatIdExists(addBoatId)" severity="error" :closable="false">ID {{ addBoatId }} finns redan</Message>
+          <InputNumber placeholder="Year*" v-model="addBoatYear" :invalid="submitted && !addBoatYear" />
+          <Button label="Lägg till" severity="primary" @click="saveBoat" />
         </div>
       </Dialog>
 
@@ -35,10 +25,10 @@
         <Column field="id" header="Id"></Column>
         <Column field="year" header="År"></Column>
         <Column header="">
-          <template #body="{ data, index }">
+          <template #body="{ data: boat }">
             <div class="flex gap-2">
-              <Button label="Välj" severity="info" size="small" @click="selectBoat(data)"> </Button>
-              <Button icon="pi pi-trash" severity="danger" size="small" text @click="boats.splice(index, 1)"> </Button>
+              <Button label="Välj" severity="primary" size="small" @click="selectBoat(boat)"> </Button>
+              <Button icon="pi pi-trash" severity="danger" size="small" text @click="deleteBoat(boat)"> </Button>
             </div>
           </template>
         </Column>
@@ -51,39 +41,41 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { Boat } from '../types/types'
-import myboatdata from '../data/myboatdata.ts'
+import { boats } from '../data/boatStore'
 
+const addBoatName = ref('')
+const addBoatId = ref<number | null>(null)
+const addBoatYear = ref<number | null>(null)
+const submitted = ref(false)
 const router = useRouter()
-
-const boats = ref<Boat[]>([myboatdata])
-
 const displayDialog = ref(false)
 
-const idInput = ref<string>('')
-const yearInput = ref<string>('')
-
-const newBoat = ref<Boat>({
-  id: 0,
-  name: '',
-  year: 0,
-  areas: [],
-})
+const deleteBoat = (boat: Boat) => {
+  boats.value = boats.value.filter((b) => b.id !== boat.id)
+}
 
 const saveBoat = () => {
-  const id = parseInt(idInput.value) || 0
-  const year = parseInt(yearInput.value) || 0
+  submitted.value = true
 
-  if (newBoat.value.name.trim() && id > 0 && year > 0) {
-    boats.value.push({ ...newBoat.value, id: id, year: year })
-
-    newBoat.value = { id: 0, name: '', year: 0, areas: [] }
-    idInput.value = ''
-    yearInput.value = ''
-    displayDialog.value = false
+  if (addBoatName.value.trim() === '' || !addBoatId.value || !addBoatYear.value || boatIdExists(addBoatId.value)) {
+    return
   }
+
+  boats.value.push({ id: addBoatId.value!, name: addBoatName.value, year: addBoatYear.value, areas: [] })
+
+  addBoatName.value = ''
+  addBoatId.value = null
+  addBoatYear.value = null
+
+  displayDialog.value = false
+  submitted.value = false
+}
+
+const boatIdExists = (id: number): boolean => {
+  return boats.value.some((x) => x.id === id)
 }
 
 const selectBoat = (boat: Boat) => {
-  router.push(`/boat/${boat.id}`)
+  router.push({ name: 'boat.overview', params: { id: boat.id } })
 }
 </script>

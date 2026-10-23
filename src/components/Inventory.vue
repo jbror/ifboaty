@@ -1,125 +1,148 @@
 <template>
-    <div class="mb-6">
-      <h1 class="text-xl font-bold">Båt ID: {{ id }}</h1>
-      <p>Här visas allt som finns i båten. Du kan också lägga till nya prylar</p>
-    </div>
+  <div class="mb-2">
+    <h1 class="text-base font-bold">Båt ID: {{ boat.id }}</h1>
+    <p class="text-base">Här visas allt som finns i båten</p>
+  </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
-      <div class="lg:col-span-2">
-        <DataTable :value="displayItems" striped-rows show-gridlines size="small" >
-          <template #header>
-            <div class="flex items-center justify-between">
-              <span class="font-bold">Innehåll</span>
-              <Button label="Lägg till ny pryl" icon="pi pi-plus" size="small" severity="info" @click="showAddForm = !showAddForm" />
-            </div>
-          </template>
-          <Column field="id" header="Id" style="width: 25%"></Column>
-          <Column field="name" header="Namn" style="width: 25%"></Column>
-          <Column field="quantity" header="Antal" style="width: 25%"></Column>
-          <Column field="category" header="Kategori" style="width: 25%"></Column>
-          <template #footer>
-            <p class="text-center text-sm">
-              <strong>{{ displayItems.length }}</strong> prylar
-            </p>
-          </template>
-        </DataTable>
+  <!-- Områdesväljare -->
+  <div class="mb-3">
+    <p class="text-xs font-semibold text-muted-color uppercase mb-2">Område</p>
+    <SelectButton
+      size="small"
+      :modelValue="selectedArea"
+      @update:modelValue="onAreaSelect"
+      :options="boat.areas"
+      optionLabel="name"
+      :allowEmpty="true"
+      class="flex-wrap gap-1"
+    >
+      <template #option="{ option }">
+        <div class="flex items-center gap-1">
+          <i :class="option.type === 'interior' ? 'pi pi-home text-xs' : 'pi pi-sun text-xs'"></i>
+          <span>{{ option.name }}</span>
+          <Badge size="small" :value="getAreaItemCount(option)" severity="secondary" />
+        </div>
+      </template>
+    </SelectButton>
+  </div>
 
-        <div v-if="showAddForm" class="p-4 mt-4 border border-zinc-200">
-          <h3 class="font-bold mb-3">Lägg till ny pryl</h3>
-          <p v-if="!selectedStorage" class="text-sm text-orange-600 mb-2">Välj ett stuvfack först för att lägga till en pryl</p>
-          <p v-else class="text-sm text-green-600 mb-2">Läggs till i: {{ selectedStorage.name }}</p>
-          <div class="flex flex-col gap-2">
-            <InputText placeholder="Namn" v-model="addItemName" />
-            <InputNumber placeholder="Id" v-model="addItemId" />
-            <InputNumber placeholder="Antal" v-model="addItemQuantity" />
-            <InputText placeholder="Kategori" v-model="addItemCategory" />
-            <Button label="Lägg till" severity="info" @click="addItem" :disabled="!selectedStorage" />
-          </div>
+  <!-- Stuvfack -->
+  <div v-if="selectedArea" class="mb-3">
+    <p class="text-xs font-semibold text-muted-color uppercase mb-2">Stuvfack i {{ selectedArea.name }}</p>
+    <SelectButton
+      size="small"
+      v-model="selectedStorage"
+      :options="selectedArea.storageUnits"
+      optionLabel="name"
+      :allowEmpty="true"
+      class="flex-wrap gap-1"
+    >
+      <template #option="{ option }">
+        <div class="flex items-center gap-1">
+          <i class="pi pi-box text-xs"></i>
+          <span>{{ option.name }}</span>
+          <Badge size="small" :value="option.items.length" severity="secondary" />
+        </div>
+      </template>
+    </SelectButton>
+  </div>
+
+  <DataTable
+    class="pb-10"
+    v-model:selection="selectedItems"
+    :value="displayItems"
+    resizableColumns
+    columnResizeMode="fit"
+    striped-rows
+    show-gridlines
+    size="small"
+    dataKey="id"
+    paginator
+    :rows="10"
+    :rows-per-page-options="[5, 10, 15, 20, 100]"
+    paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+    currentPageReportTemplate="{first} till {last} av {totalRecords} prylar"
+  >
+    <template #header>
+      <div class="flex items-center justify-between">
+        <p class="text-muted-color-emphasis font-medium">Innehåll</p>
+        <div class="flex gap-2">
+          <Button
+            class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]"
+            label="Lägg till"
+            icon="pi pi-plus"
+            icon-class="text-xs"
+            size="small"
+            severity="primary"
+            @click="showAddForm = !showAddForm"
+          />
+          <Button
+            class="[--p-button-sm-padding-x:0.25rem] [--p-button-sm-padding-y:0.25rem]"
+            label="Ta bort"
+            icon="pi pi-trash"
+            size="small"
+            severity="danger"
+            variant="outlined"
+            @click="deleteItems"
+            :disabled="!selectedItems.length"
+          />
         </div>
       </div>
+    </template>
+    <Column selectionMode="multiple" style="width: 2%"></Column>
+    <Column field="id" header="Id" style="width: 2%"></Column>
+    <Column field="name" header="Namn" style="width: 40%"></Column>
+    <Column field="category" header="Kategori" style="width: 40%"></Column>
+    <Column field="quantity" header="Antal" style="width: 2%"></Column>
+  </DataTable>
 
-      <div class="flex flex-col gap-4">
-        <Card>
-          <template #title>
-            <div class="flex items-center gap-2">
-              <i class="pi pi-map-marker"></i>
-              <span>Områden</span>
-            </div>
-          </template>
-          <template #content>
-            <Tree
-              :value="areaNodes"
-              selectionMode="single"
-              v-model:selectionKeys="selectedAreaKey"
-              @node-select="onAreaSelect"
-              @node-unselect="onAreaUnselect"
-            />
-          </template>
-        </Card>
+  <Dialog v-model:visible="showAddForm" modal header="Lägg till ny pryl" class="w-[95vw] sm:w-[75vw] md:w-120">
+    <div class="flex flex-col gap-3">
+      <Message class="mt-1" v-if="!selectedStorage" severity="warn" :closable="false">Välj ett stuvfack först</Message>
+      <Message class="mt-1" v-else severity="success" :closable="false">Läggs till i: {{ selectedStorage.name }}</Message>
 
-        <Card>
-          <template #title>
-            <div class="flex items-center gap-2">
-              <i class="pi pi-box"></i>
-              <span>Stuvfack</span>
-            </div>
-          </template>
-          <template #content>
-            <Tree
-              :value="storageNodes"
-              selectionMode="single"
-              v-model:selectionKeys="selectedStorageKey"
-              @node-select="onStorageSelect"
-              @node-unselect="onStorageUnselect"
-            />
-          </template>
-        </Card>
-      </div>
+      <Select
+        v-model="selectedStorage"
+        :options="boat.areas"
+        optionLabel="name"
+        optionGroupLabel="name"
+        optionGroupChildren="storageUnits"
+        placeholder="Välj stuvfack"
+      >
+        <template #optiongroup="slotProps">
+          <i class="pi pi-box text-primary mr-1"></i>
+
+          <span class="text-primary text-xs">{{ slotProps.option.name }} </span>
+        </template>
+      </Select>
+
+      <InputText placeholder="Namn*" v-model="addItemName" :invalid="submitted && addItemName.trim() === ''" />
+      <InputNumber
+        placeholder="Id*"
+        v-model="addItemId"
+        :invalid="(submitted && !addItemId) || (addItemId !== null && itemIdExists(addItemId))"
+      />
+      <Message v-if="addItemId && itemIdExists(addItemId)" severity="error" :closable="false">ID {{ addItemId }} finns redan</Message>
+      <InputNumber placeholder="Antal*" v-model="addItemQuantity" :invalid="submitted && !addItemQuantity" />
+      <InputText placeholder="Kategori" v-model="addItemCategory" />
+      <Button label="Lägg till" severity="primary" @click="addItem" :disabled="!selectedStorage" />
     </div>
-  
+  </Dialog>
 </template>
 
 <script setup lang="ts">
-import type { Boat, Item, Area, StorageUnit } from '../types/types'
-import boatData from '../data/myboatdata.ts'
+import type { Item, Area, StorageUnit, Boat } from '../types/types'
+
 import { ref, computed } from 'vue'
-import type { TreeNode } from 'primevue/treenode'
 
 const props = defineProps<{
-  id: string
+  boat: Boat
 }>()
 
 const showAddForm = ref(false)
-const selectedAreaKey = ref({})
-const selectedStorageKey = ref({})
 const selectedArea = ref<Area | null>(null)
 const selectedStorage = ref<StorageUnit | null>(null)
-
-const areaNodes = computed<TreeNode[]>(() => {
-  return boatData.areas.map((area, index) => ({
-    key: `area-${index}`,
-    label: area.name,
-    icon: area.type === 'interior' ? 'pi pi-home' : 'pi pi-sun',
-    data: area,
-  }))
-})
-
-const storageNodes = computed<TreeNode[]>(() => {
-  let units: StorageUnit[] = []
-
-  if (selectedArea.value) {
-    units = selectedArea.value.storageUnits
-  } else {
-    units = boatData.areas.flatMap((area) => area.storageUnits)
-  }
-
-  return units.map((unit, index) => ({
-    key: `storage-${index}`,
-    label: unit.name,
-    icon: 'pi pi-box',
-    data: unit,
-  }))
-})
+const selectedItems = ref<Item[]>([])
 
 const displayItems = computed(() => {
   if (selectedStorage.value) {
@@ -130,26 +153,15 @@ const displayItems = computed(() => {
     return selectedArea.value.storageUnits.flatMap((unit) => unit.items)
   }
 
-  return boatData.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
+  return props.boat.areas.flatMap((area) => area.storageUnits.flatMap((unit) => unit.items))
 })
 
-function onAreaSelect(node: TreeNode) {
-  selectedArea.value = node.data as Area
-  selectedStorage.value = null
-  selectedStorageKey.value = {}
+function getAreaItemCount(area: Area) {
+  return area.storageUnits.reduce((total, unit) => total + unit.items.length, 0)
 }
 
-function onAreaUnselect() {
-  selectedArea.value = null
-  selectedStorage.value = null
-  selectedStorageKey.value = {}
-}
-
-function onStorageSelect(node: TreeNode) {
-  selectedStorage.value = node.data as StorageUnit
-}
-
-function onStorageUnselect() {
+function onAreaSelect(value: Area | null) {
+  selectedArea.value = value
   selectedStorage.value = null
 }
 
@@ -158,46 +170,49 @@ const addItemId = ref<number | null>(null)
 const addItemQuantity = ref<number | null>(null)
 const addItemCategory = ref('')
 
+const submitted = ref(false)
+
+function itemIdExists(id: number): boolean {
+  return props.boat.areas.some((area) => area.storageUnits.some((unit) => unit.items.some((item) => item.id === id)))
+}
+
 function addItem() {
-  if (!selectedStorage.value) {
-    alert('Välj ett stuvfack först!')
+  submitted.value = true
+
+  if (
+    !selectedStorage.value ||
+    addItemName.value.trim() === '' ||
+    !addItemId.value ||
+    !addItemQuantity.value ||
+    itemIdExists(addItemId.value)
+  ) {
     return
   }
 
-  if (!isValidItem(addItemName.value, addItemId.value, addItemQuantity.value)) {
-    return
-  }
-
-  const newItem: Item = {
+  selectedStorage.value.items.push({
     name: addItemName.value,
-    id: addItemId.value || 0,
-    quantity: Number(addItemQuantity.value),
+    id: addItemId.value,
+    quantity: addItemQuantity.value,
     category: addItemCategory.value,
-  }
-
-  selectedStorage.value.items.push(newItem)
+  })
 
   addItemName.value = ''
   addItemId.value = null
   addItemQuantity.value = null
   addItemCategory.value = ''
+  submitted.value = false
   showAddForm.value = false
 }
 
-function isValidItem(name: string, id: number | null, quantity: number | null): boolean {
-  if (name.trim() === '' || id === null || quantity === null) {
-    return false
-  }
-  const quantityNum = Number(quantity)
+function deleteItems() {
+  const idsToDelete = new Set(selectedItems.value.map((item) => item.id))
 
-  if (!Number.isInteger(id) || !Number.isInteger(quantityNum)) {
-    return false
+  for (const area of props.boat.areas) {
+    for (const unit of area.storageUnits) {
+      unit.items = unit.items.filter((x) => !idsToDelete.has(x.id))
+    }
   }
-  if (id <= 0 || quantityNum <= 0) {
-    return false
-  }
-
-  return true
+  selectedItems.value = []
 }
 </script>
 

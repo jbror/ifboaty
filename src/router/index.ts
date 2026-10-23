@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Boat from '../components/Boat.vue'
-import BoatStart from '../components/BoatStart.vue'
+import Boat from '@/components/Boat.vue'
+import BoatStart from '@/components/BoatStart.vue'
 import Overview from '@/components/Overview.vue'
 import Inventory from '@/components/Inventory.vue'
 import Todo from '@/components/Todo.vue'
@@ -18,19 +18,18 @@ const router = createRouter({
       path: '/boat/:id',
       name: 'boatstart',
       component: BoatStart,
-      props: true,
       children: [
         // Översikt
-        { path: '', name: 'boat.overview', component: Overview, props: true },
+        { path: '', name: 'boat.overview', component: Overview },
 
         // Inventory
-        { path: 'inventory', name: 'boat.inventory', component: Inventory, props: true },
+        { path: 'inventory', name: 'boat.inventory', component: Inventory },
 
         // Todo
-        { path: 'todo', name: 'boat.todo', component: Todo, props: true },
+        { path: 'todo', name: 'boat.todo', component: Todo },
 
         // My boat
-        { path: 'myboat', name: 'boat.myboat', component: MyBoat, props: true },
+        { path: 'myboat', name: 'boat.myboat', component: MyBoat },
       ],
     },
   ],

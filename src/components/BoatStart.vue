@@ -1,93 +1,86 @@
 <template>
-  <div class="flex h-screen">
-    <Menu :model="menuItems" class="w-64 ">
+  <div class="flex flex-col h-screen bg-slate-50">
+    <Toolbar class="bg-slate-800 text-white md:hidden">
       <template #start>
-        <div class="h-38 mt-4 mb-4 mr-12">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-            <!-- Sailboat -->
-            <g
-              transform="translate(256,220) scale(1.6)"
-              stroke="white"
-              stroke-width="5"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <!-- Mast -->
-              <line x1="0" y1="-120" x2="0" y2="70" />
-
-              <!-- Front Sail -->
-              <path d="M 0 -110 L 95 40 L 0 40 Z" />
-
-              <!-- Back Sail -->
-              <path d="M 0 -100 L -75 40 L 0 40 Z" />
-
-              <!-- Hull -->
-              <path d="M -120 60 Q 0 85 120 60" />
-            </g>
-
-            <!-- Text -->
-            <text
-              x="256"
-              y="430"
-              text-anchor="middle"
-              fill="white"
-              font-family="Segoe UI, Arial, sans-serif"
-              font-size="70"
-              font-weight="500"
-              letter-spacing="1"
-            >
-              ifBoaty
-            </text>
-          </svg>
-        </div>
+        <Button icon="pi pi-bars" @click="sidebarVisible = true" severity="secondary" class="mr-3" />
+        <span class="font-semibold">{{ currentPage?.label }}</span>
       </template>
+    </Toolbar>
 
-      <template #item="{ item, props }">
-        <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
-          <a
-            :href="href"
-            v-bind="props.action"
-            @click="navigate"
-            :class="{ 'active-menu-item': isExactActive }"
-            class="grid-cols-[auto_1_fr]"
+    <div class="flex flex-1 overflow-hidden">
+      <Drawer v-model:visible="sidebarVisible" class="md:hidden w-64!">
+        <template #header>
+          <BoatLogo :size="152"> </BoatLogo>
+        </template>
+        <div>
+          <router-link
+            v-for="item in menuItems"
+            :key="item.route"
+            :to="{ name: item.route, params: { id: boatId } }"
+            @click="sidebarVisible = false"
+            custom
+            v-slot="{ href, navigate, isExactActive }"
           >
-            <span :class="item.icon" />
-            <span class="px-2 py-2">{{ item.label }}</span>
-          </a>
-        </router-link>
-      </template>
-
-      <template #end>
-        <div class="grid grid-cols-2 px-2 py-2">
-          <RouterLink to="/">
-            <Button size="small" label="Tillbaka hem" severity="secondary" />
-          </RouterLink>
+            <a
+              :href="href"
+              @click="navigate"
+              :class="{ 'active-menu-item': isExactActive }"
+              class="flex items-center gap-3 py-2 px-4 mt-2 cursor-pointer"
+            >
+              <span :class="item.icon" />
+              <span>{{ item.label }}</span>
+            </a>
+          </router-link>
         </div>
-      </template>
-    </Menu>
-    <ScrollPanel
-      class="flex-1"
-      :dt="{
-        bar: {
-          background: '{primary.color}',
-        },
-      }"
-    >
-      <div class="max-w-7xl p-6">
-        <router-view></router-view>
+        <template #footer>
+          <RouterLink to="/" @click="sidebarVisible = false">
+            <Button label="Tillbaka hem" severity="secondary" />
+          </RouterLink>
+        </template>
+      </Drawer>
+
+      <Menu :model="menuItems" class="hidden md:block w-56">
+        <template #start>
+          <BoatLogo class="mt-4 ml-2 mb-4" :size="152"> </BoatLogo>
+        </template>
+        <template #item="{ item, props }">
+          <router-link #="{ href, navigate, isExactActive }" :to="{ name: item.route, params: { id: boatId } }" custom>
+            <a :href="href" v-bind="props.action" @click="navigate" :class="{ 'active-menu-item': isExactActive }">
+              <span :class="item.icon" />
+              <span class="px-2 py-2">{{ item.label }}</span>
+            </a>
+          </router-link>
+        </template>
+        <template #end>
+          <div class="px-2 py-2">
+            <RouterLink to="/">
+              <Button size="small" label="Tillbaka hem" severity="secondary" />
+            </RouterLink>
+          </div>
+        </template>
+      </Menu>
+
+      <div class="flex flex-1 flex-col items-center overflow-y-auto p-2">
+        <div class="bg-white rounded-xl shadow-sm w-full p-2 md:max-w-11/12 xl:max-w-8/12">
+          <router-view :boat="boatData"></router-view>
+        </div>
       </div>
-    </ScrollPanel>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { MenuItem } from 'primevue/menuitem'
+import BoatLogo from './logo/BoatLogo.vue'
+import { boats } from '../data/boatStore'
 
 const route = useRoute()
 const boatId = computed(() => route.params.id)
+
+const boatData = computed(() => boats.value.find((b) => b.id === Number(boatId.value)))
+const sidebarVisible = ref(false)
 
 const menuItems: MenuItem[] = [
   {
@@ -110,17 +103,16 @@ const menuItems: MenuItem[] = [
     icon: 'pi pi-cog',
     route: 'boat.myboat',
   },
-  {
-    separator: true,
-    class: 'mt-4',
-  },
 ]
+
+const currentPage = computed(() => menuItems.find((item) => item.route === route.name))
 </script>
 
 <style scoped>
 .active-menu-item {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
+  background-color: var(--p-primary-50);
+  color: var(--p-primary-700);
   font-weight: 600;
+  border-radius: 6px;
 }
 </style>

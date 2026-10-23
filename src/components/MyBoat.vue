@@ -1,15 +1,15 @@
 <template>
-  <div class="flex">
-    <h1>Båt ID: {{ id }}</h1>
-    <p>/Min båt</p>
+  <div class="mb-2">
+    <h1 class="text-base font-bold">Båt ID: {{ boat.id }}</h1>
+    <p class="text-base">Info och inställningar om din båt</p>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { Boat } from '../types/types'
 
- const props = defineProps<{
-  id: string
+const props = defineProps<{
+  boat: Boat
 }>()
-
 </script>
 <style scoped></style>
